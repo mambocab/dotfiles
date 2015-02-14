@@ -137,7 +137,7 @@ inoremap <s-tab> <c-n>
 " adapted from garybernhardt
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>e :edit 
-map <leader>v :view 
+map <leader>v :vsplit
 cnoremap <expr> %% expand('%:h').'/'
 map <leader>E :edit %%
 map <leader>V :view %%
@@ -150,5 +150,5 @@ set winwidth=79
 
 " task runner
 if maparg("<leader>t") == ""
-    map <unique> <leader>t :w\|:!./t.sh<cr>
+    map <leader>t :w\|:!./t.sh<cr>
 endif
