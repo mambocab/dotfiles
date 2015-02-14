@@ -35,3 +35,18 @@ function scratch {
   cd $cur_dir
   echo "New scratch dir ready for grinding ;>"
 }
+
+function exp {
+    open "http://explainshell.com/explain?cmd=`echo $* | sed 's/\s/\+/g'`"
+}
+
+function mkcd { mkdir -p $1 && cd $1 }
+
+function t {
+    TASKFILE='./t.sh'
+    if [ -e $TASKFILE ]; then
+        $TASKFILE $*
+    else
+        echo "No $TASKFILE found"
+    fi
+}
