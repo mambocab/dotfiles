@@ -18,9 +18,11 @@
     creates: "{{dotfiles_user_home}}/.zshrc.bak"
   when: zshrc_stat.stat.exists
 
-- include: prezto.yml
-  when: zsh_prezto
+- name: Symlink vimrc
+  file:
+    src: "{{ dotfiles_home }}/roles/zsh/files/zshrc.link"
+    dest: "{{dotfiles_user_home}}/.zshrc"
+    state: link
 
-- name: Copy minimal zshrc
-  copy: src=zshrc_minimal dest={{dotfiles_user_home}}/.zshrc
-  when: not zsh_prezto
+- include: antigen.yml
+  when: zsh_antigen

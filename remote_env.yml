@@ -15,12 +15,10 @@
 
 - name: Set up remote development environments (roles)
   hosts: remote
-  # No prezto, minimal vimrc
   vars:
-    zsh_prezto: no
+    zsh_antigen: no
     vim_vundle: no
   roles:
     - git
     - zsh
     - vim
-    - tmux
