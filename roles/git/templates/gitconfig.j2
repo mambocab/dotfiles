@@ -12,47 +12,29 @@
         s = status
         co = checkout
         cob = checkout -b
-        c = checkout
-        ci = commit
+        c = commit -v
         noff = merge --no-ff
-        amend = commit --amend
-        br = branch
-        df = diff
-        dfs = diff --staged
+        amend = commit -v --amend
+        b = branch
+        d = diff
+        ds = diff --staged
+        p = push
         pl = pull
-        pup = pull upstream
-        shorg = push -u origin
 
-        logg = log --graph --decorate --oneline --abbrev-commit --all
+        a = add
+        aa = add --all
+        r = remote
+
         l = log --graph --decorate --oneline --abbrev-commit --all
-        hist = log --graph --decorate --oneline --abbrev-commit
         h = log --graph --decorate --oneline --abbrev-commit
 
-        nuke = delete-branch
-        switch = !legit switch \"$@\"
-        branches = !legit branches
-        sprout = !legit sprout \"$@\"
-        unpublish = !legit unpublish \"$@\"
-        harvest = !legit harvest \"$@\"
-        sync = !legit sync \"$@\"
-        publish = !legit publish \"$@\"
-        graft = !legit graft \"$@\"
-        sw = !legit switch \"$@\"
-
-        issues = !hub browse -- issues
-        url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
-
-        f = flow
-        fublish = flow feature publish
-        feature = flow feature start
-        fart = flow feature start
-        finfeature = flow feature finish
-        fix = flow hotfix start
-        finfix = flow hotfix finish
-        release = flow release start
-        finrelease = flow release finish
-
-        sub = submodule
+        rev = !sh -c 'git rev-list --reverse HEAD | nl | awk \"{ if(\\$1 == "$0") { print \\$2 }}\"'
+        unpushed = log --all --not --remotes --tags --pretty=format:'%h %an %s'
+        up = unpushed
+        search-logs = log -p -S
+        grep-logs = log -p -G
+[mergetool]
+        keepBackup = true
 [color]
         diff = auto
         status = auto
@@ -61,10 +43,6 @@
 [core]
         excludesfile = ~/.gitignore_global
         editor = vim
-[apply]
-        whitespace = nowarn
-[mergetool]
-        keepBackup = false
 [difftool]
         prompt = false
 [push]
