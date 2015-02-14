@@ -13,8 +13,8 @@
 - name: Install Vundle
   git:
     repo: git@github.com:gmarik/Vundle.vim.git
-    dest: "{{dotfiles_user_home}}/.vim/bundle/Vundle.vim
-  when: not vim_minimal
+    dest: "{{dotfiles_user_home}}/.vim/bundle/Vundle.vim"
+  when: vim_vundle
 
 
 # Configuration
@@ -31,10 +31,10 @@
 
 - name: Symlink vimrc
   file:
-    src: "{{ dotfiles_home }}/roles/vim/files/vimrc"
+    src: "{{ dotfiles_home }}/roles/vim/files/vimrc.link"
     dest: "{{dotfiles_user_home}}/.vimrc"
     state: link
 
 - name: Install plugins
   command: vim -c :BundleInstall
-  when: not vim_minimal
+  when: vim_vundle

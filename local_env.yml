@@ -4,6 +4,9 @@
 
 - name: Set up local development environment
   hosts: local
+  vars:
+    zsh_antigen: yes
+    vim_vundle: yes
   roles:
     - git
     - {role: package_manager, tags: ['bootstrap']}
