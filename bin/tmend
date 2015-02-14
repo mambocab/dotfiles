@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+function main {
+  tmux move-window `source_window_option` -t `new_window_num`
+}
+
+# single argument: the window we want to move
+source_window=$1
+function source_window_option {
+  if [ -n "$source_window" ]
+  then
+    echo "-s $source_window"
+  fi
+}
+
+function new_window_num {
+  echo $((`base_window_num` + 1))
+}
+
+# get current biggest window number or 99, whichever is larger
+function base_window_num {
+  tmux_window_nums |
+  {
+    echo 99
+    cat
+  } |
+  sort -nru |
+  head -n1
+}
+
+function tmux_window_nums {
+  tmux list-windows |
+  cut -d: -f1
+}
+
+main
+
