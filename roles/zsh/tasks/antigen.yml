@@ -6,5 +6,5 @@
 - name: Link antigenrc file
   file:
     src: "{{ dotfiles_home }}/roles/zsh/files/antigenrc.link"
-    dest: "{{ '~/.antigenrc' | expanduser }}"
+    dest: "{{ dotfiles_user_home }}/.antigenrc"
     state: link
