@@ -1,7 +1,7 @@
 
 - name: Install antigen
   https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh
-  dest: "{{ '~/.antigen/antigen.zsh' | expanduser }}"
+  dest: "{{ dotfiles_user_home }}/.antigen/antigen.zsh"
 
 - name: Link antigenrc file
   file:
