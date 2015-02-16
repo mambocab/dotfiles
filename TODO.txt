@@ -1,0 +1,10 @@
+- set up font installation
+- set up desktop image copying
+- $ZSH is a misnomer. Why not just $DOTFILES?
+- set up templating in tmux for OS X
+- split out tmuxinator into its own role?
+- set up tmux powerline configuration
+- add ruby and irb rc files
+- add custom completion dictionary, like in current dotfiles
+- set up powerline installation
+- ack and ackrc
