@@ -36,5 +36,5 @@
     state: link
 
 - name: Install plugins
-  command: vim -c :BundleInstall
+  command: vim +BundleInstall +qall
   when: vim_vundle
