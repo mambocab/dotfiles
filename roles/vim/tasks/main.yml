@@ -12,7 +12,7 @@
 
 - name: Install Vundle
   git:
-    repo: git@github.com:gmarik/Vundle.vim.git
+    repo: https://github.com/gmarik/Vundle.vim.git
     dest: "{{dotfiles_user_home}}/.vim/bundle/Vundle.vim"
   when: vim_vundle
 
