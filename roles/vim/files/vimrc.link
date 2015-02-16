@@ -14,7 +14,7 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'alfredodeza/pytest.vim'
     Plugin 'tell-k/vim-autopep8'
     Plugin 'nvie/vim-flake8'
-    Plugin 'Valloric/YouCompleteMe'
+    "Plugin 'Valloric/YouCompleteMe'
     Plugin 'tpope/vim-vinegar'
     Plugin 'tpope/vim-commentary.git'
     Plugin 'ntpeters/vim-better-whitespace'

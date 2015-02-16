@@ -8,3 +8,4 @@
 - add custom completion dictionary, like in current dotfiles
 - set up powerline installation
 - ack and ackrc
+- set up you complete me installation
