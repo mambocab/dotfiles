@@ -1,3 +1,5 @@
+- name: Create .antigen directory
+  file: dest="{{ dotfiles_user_home }}/.antigen" state=directory
 
 - name: Install antigen
   get_url: url=https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh dest="{{ dotfiles_user_home }}/.antigen/antigen.zsh" mode=755
