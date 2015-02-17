@@ -20,7 +20,7 @@ do
 done
 
 # load antigen if applicable
-ANTIGENRC="${$HOME}/.antigenrc"
+ANTIGENRC="${HOME}/.antigenrc"
 if [[ -s $ANTIGENRC ]]; then
   source $ANTIGENRC
 fi
