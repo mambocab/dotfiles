@@ -10,3 +10,4 @@
 - set up you complete me installation
 - i3 for ubuntu
 - mopidy and ncmpcpp
+- location of desktop manager files -- put them somewhere where they won't clutter up ~
