@@ -1,0 +1,17 @@
+- name: Create fonts directory
+  file:
+    path: "{{ dotfiles_user_home }}/.fonts/"
+    state: directory
+
+- name: Symlink fonts
+  file:
+    src: "{{ dotfiles_home }}/roles/fonts/files/{{ item }}"
+    dest: "{{dotfiles_user_home}}/.fonts/{{ item }}"
+    state: link
+  with_items:
+    - anonymous-pro
+    - arvo
+    - consolas
+    - cousine
+    - inconsolata-dz
+    - ubuntu
