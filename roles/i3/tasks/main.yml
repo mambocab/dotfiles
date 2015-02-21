@@ -10,7 +10,7 @@
   command: mv ~/.i3/config ~/.i3/config.bak
   args:
     creates: "{{dotfiles_user_home}}/.i3/config.bak"
-  when: vimrc_stat.stat.exists
+  when: i3_config_stat.stat.exists
 
 - name: create i3 dotfile directory
   file:
