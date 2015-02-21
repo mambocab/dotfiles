@@ -1,0 +1,20 @@
+- name: install ack-grep
+  apt: pkg=ack-grep
+  when: ansible_os_family == "Debian"
+
+- name: Check if ackrc exists
+  stat: path="{{dotfiles_user_home}}/.ackrc"
+  register: ackrc_stat
+  failed_when: False
+
+- name: Back up ackrc
+  command: mv ~/.ackrc ~/.ackrc.bak
+  args:
+    creates: "{{dotfiles_user_home}}/.ackrc.bak"
+  when: ackrc_stat.stat.exists
+
+- name: Symlink ackrc
+  file:
+    src: "{{ dotfiles_home }}/roles/ack/files/ackrc.link"
+    dest: "{{dotfiles_user_home}}/.ackrc"
+    state: link

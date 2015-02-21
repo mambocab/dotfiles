@@ -6,7 +6,7 @@
 - set up tmux powerline configuration
 - add ruby and irb rc files
 - set up powerline installation
-- ack and ackrc
+- set up ack installation for OS X
 - set up you complete me installation
 - i3 for ubuntu
 - mopidy and ncmpcpp

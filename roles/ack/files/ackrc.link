@@ -1,0 +1,6 @@
+--pager=less -I
+
+--type-set=coffee=.coffee
+--type-set=json=.json
+--type-set=mako=.mako
+--type-add=css=.css
