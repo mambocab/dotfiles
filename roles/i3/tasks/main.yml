@@ -1,0 +1,24 @@
+- name: install i3
+  apt: pkg=i3
+
+- name: Check if i3 config exists
+  stat: path="{{dotfiles_user_home}}/.i3/config"
+  register: i3_config_stat
+  failed_when: False
+
+- name: Back up i3 config
+  command: mv ~/.i3/config ~/.i3/config.bak
+  args:
+    creates: "{{dotfiles_user_home}}/.i3/config.bak"
+  when: vimrc_stat.stat.exists
+
+- name: create i3 dotfile directory
+  file:
+    state: directory
+    path: "{{ dotfiles_user_home }}/.i3/"
+
+- name: Symlink i3 config
+  file:
+    src: "{{ dotfiles_home }}/roles/i3/files/config.link"
+    dest: "{{dotfiles_user_home}}/.i3/config"
+    state: link

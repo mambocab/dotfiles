@@ -17,5 +17,6 @@
     - tmux
     - git-flow
     - {role: osx, when: ansible_os_family == "Darwin"}
+    - {role: i3, when: ansible_os_family == "Debian"}
     - fonts
 
