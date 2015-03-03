@@ -1,6 +1,7 @@
 - name: install ack-grep
   apt: pkg=ack-grep
   when: ansible_os_family == "Debian"
+  sudo: yes
 
 - name: Check if ackrc exists
   stat: path="{{dotfiles_user_home}}/.ackrc"

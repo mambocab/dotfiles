@@ -1,0 +1,16 @@
+- name: Check if Xmodmap exists
+  stat: path="{{dotfiles_user_home}}/.Xmodmap"
+  register: Xmodmap_stat
+  failed_when: False
+
+- name: Back up Xmodmap
+  command: mv ~/.Xmodmap ~/.Xmodmap.bak
+  args:
+    creates: "{{dotfiles_user_home}}/.Xmodmap.bak"
+  when: Xmodmap_stat.stat.exists
+
+- name: Symlink Xmodmap
+  file:
+    src: "{{ dotfiles_home }}/roles/X11/files/Xmodmap.link"
+    dest: "{{dotfiles_user_home}}/.Xmodmap"
+    state: link

@@ -18,5 +18,6 @@
     - git-flow
     - {role: osx, when: ansible_os_family == "Darwin"}
     - {role: i3, when: ansible_os_family == "Debian"}
+    - {role: X11, when: ansible_os_family == "Debian"}
     - fonts
-
+    - ack
