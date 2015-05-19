@@ -1,0 +1,80 @@
+#!/usr/bin/env python
+from __future__ import print_function, unicode_literals
+import sys
+
+try:
+    from builtins import str
+except:
+    pass
+
+try:
+    from HTMLParser import HTMLParser
+except:
+    from html.parser import HTMLParser
+
+try:
+    from urllib2 import urlopen
+except:
+    from urllib.request import urlopen
+
+from distutils.version import StrictVersion
+
+
+def main():
+    version_arg = get_version_arg(sys.argv)
+    versions = sorted(get_versions(get_hrefs_from_page(get_page_contents())),
+                      key=StrictVersion)
+
+    if version_arg is not None:
+        sys.exit(0 if version_arg in versions else 1)
+
+    for v in versions:
+        print(v)
+
+
+def get_page_contents():
+    cassandra_url = 'http://archive.apache.org/dist/cassandra/'
+    return str(urlopen(cassandra_url).read())
+
+
+def get_versions(strs):
+    return [s for s in map(to_version, strs) if s is not None]
+
+
+def get_hrefs_from_page(p):
+    parser = HrefExtractionParser()
+    parser.feed(p)
+    return parser.result
+
+
+def to_version(s):
+    if s.endswith('/'):
+        s = s[:-1]
+    return s if valid_version(s) else None
+
+
+def valid_version(s):
+    return all(c == '.' or c.isdigit() for c in s)
+
+
+class HrefExtractionParser(HTMLParser):
+    def __init__(self):
+        self.result = []
+        HTMLParser.__init__(self)
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'a':
+            attrs = dict(attrs)
+            self.result.append(attrs['href'])
+
+
+def get_version_arg(argv):
+    if len(argv) > 2:
+        sys.exit(argv[0] + 'takes only 0 or 1 argument.')
+    if len(argv) == 2:
+        return argv[1]
+    return None
+
+
+if __name__ == '__main__':
+    main()
