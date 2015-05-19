@@ -22,3 +22,20 @@
     src: "{{ dotfiles_home }}/roles/i3/files/config.link"
     dest: "{{dotfiles_user_home}}/.i3/config"
     state: link
+
+- name: Check if i3 status config exists
+  stat: path="{{dotfiles_user_home}}/.i3status.conf"
+  register: i3_status_stat
+  failed_when: False
+
+- name: Back up i3 status config
+  command: mv ~/.i3status.conf ~/.i3status.conf.bak
+  args:
+    creates: "{{dotfiles_user_home}}/.i3status.conf.bak"
+  when: i3_status_stat.stat.exists
+
+- name: Symlink i3 status config
+  file:
+    src: "{{ dotfiles_home }}/roles/i3/files/i3status.conf.link"
+    dest: "{{dotfiles_user_home}}/.i3status.conf"
+    state: link
