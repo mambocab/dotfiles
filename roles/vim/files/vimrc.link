@@ -14,18 +14,24 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'alfredodeza/pytest.vim'
     Plugin 'tell-k/vim-autopep8'
     Plugin 'nvie/vim-flake8'
-    "Plugin 'Valloric/YouCompleteMe'
+    Plugin 'Valloric/YouCompleteMe'
     Plugin 'tpope/vim-vinegar'
     Plugin 'tpope/vim-commentary.git'
+    Plugin 'tpope/vim-surround'
     Plugin 'ntpeters/vim-better-whitespace'
-    Plugin 'scrooloose/syntastic'
+    " Plugin 'scrooloose/syntastic'
     Plugin 'bitc/vim-hdevtools'
+    Plugin 'airblade/vim-gitgutter'
+    Plugin 'andrep/vimacs'
+    Plugin 'tommcdo/vim-exchange'
+    Plugin 'tpope/vim-repeat'
+    Plugin 'tpope/vim-dispatch'
+    Plugin 'rking/ag.vim'
 
     call vundle#end()
 
     filetype on
 endif
-
 
 " Automatically source the vimrc file after saving it
 " from sloria1
@@ -56,7 +62,7 @@ set omnifunc=syntaxcomplete#Complete
 "
 set showcmd
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 filetype plugin indent on
 syntax on
 set autoindent
@@ -104,11 +110,20 @@ nnoremap <leader><leader> <c-^>
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_ignore_files = ['\.py$']
+let g:pep8_ignore="e501"
 """""""""
+
+let g:pymode_warnings = 1
+let g:pymode_options_max_line_length = 120
+let g:pymode_lint_ignore = "E501"
+
+" get rid of annoying parts of autocompletion
+set completeopt=menu
 
 """"""""" haskell
 " hdevtools
@@ -139,7 +154,7 @@ inoremap <s-tab> <c-n>
 " adapted from garybernhardt
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>e :edit 
-map <leader>v :vsplit
+map <leader>v :vsplit<CR>
 cnoremap <expr> %% expand('%:h').'/'
 map <leader>E :edit %%
 map <leader>V :view %%
@@ -148,7 +163,40 @@ map <leader>b :buffer
 map <leader>w :write<CR>
 map <leader>q :quit<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+:nnoremap <Leader>* :%s/\<<C-r><C-w>\>/
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Selecta Mappings (via garybernhardt)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Run a given vim command on the results of fuzzy selecting from a given shell
+" command. See usage below.
+function! SelectaCommand(choice_command, selecta_args, vim_command)
+  try
+    let selection = system(a:choice_command . " | selecta " . a:selecta_args)
+  catch /Vim:Interrupt/
+    " Swallow the ^C so that the redraw below happens; otherwise there will be
+    " leftovers from selecta on the screen
+    redraw!
+    return
+  endtry
+  redraw!
+  exec a:vim_command . " " . selection
+endfunction
+
+function! SelectaFile(path)
+  call SelectaCommand("find " . a:path . "/* -type f", "", ":e")
+endfunction
+nnoremap <leader>f :call SelectaFile(".")<cr>
+
+
+let g:VM_Enabled=1
+
 set winwidth=79
+
+set modeline
 
 " task runner
 if maparg("<leader>t") == ""
