@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+usage() { echo "usage: `basename $0` <yo username>" ; }
+
+if [ -z "$YO_API_KEY" ] ; then
+  echo No YO_API_KEY in environment.
+  usage
+  exit 1
+fi
+if [ -z "$1" ] ; then
+  echo "`basename $0` requires a username."
+  usage
+  exit 1
+fi
+
+echo "Yo-ing $1"
+curl --data "api_token=$YO_API_KEY&username=$1" https://api.justyo.co/yo/
