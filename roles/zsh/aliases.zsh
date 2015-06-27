@@ -28,6 +28,17 @@ alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/download
 bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
 
+if [ "$OSTYPE" != "darwin" ] ; then
+  alias pbcopy='xclip -sel clip'
+  alias pbpaste='xclip -sel clip -o'
+fi
+
 # zsh builtins
 disable r
 autoload -U zmv
+
+alias gistp='gist -p'
+
+alias agpy='ag --python'
+alias agj='ag --java'
+

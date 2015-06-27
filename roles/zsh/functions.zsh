@@ -37,7 +37,7 @@ function scratch {
 }
 
 function exp {
-    open "http://explainshell.com/explain?cmd=`echo $* | sed 's/\s/\+/g'`"
+    sensible-browser "http://explainshell.com/explain?cmd=`echo $* | sed 's/\s/\+/g'`"
 }
 
 function mkcd { mkdir -p $1 && cd $1 }
@@ -49,4 +49,45 @@ function t {
     else
         echo "No $TASKFILE found"
     fi
+}
+
+# via garybernhardt
+# By default, ^S freezes terminal output and ^Q resumes it. Disable that so
+# that those keys can be used for other things.
+unsetopt flowcontrol
+# Run Selecta in the current working directory, appending the selected path, if
+# any, to the current command, followed by a space.
+function insert-selecta-path-in-command-line() {
+    local selected_path
+    # Print a newline or we'll clobber the old prompt.
+    echo
+    # Find the path; abort if the user doesn't select anything.
+    selected_path=$(find * -type f ! -name '*.pyc' | selecta) || return
+    # Append the selection to the current command buffer.
+    eval 'LBUFFER="$LBUFFER$selected_path "'
+    # Redraw the prompt since Selecta has drawn several new lines of text.
+    zle reset-prompt
+}
+# Create the zle widget
+zle -N insert-selecta-path-in-command-line
+# Bind the key to the newly created widget
+bindkey "^S" "insert-selecta-path-in-command-line"
+
+function wrk() {
+  wo cstar_te
+  cd ~/cstar_src
+  while getopts s opt ; do
+    case $opt in
+      s) ssh-add ;;
+    esac
+  done
+  shift $OPTIND-1
+  if [ -n "$1" ] ; then
+    cd $1
+  fi
+}
+alias wrks='wrk -s'
+
+function wcd() {
+  cd $(find . -maxdepth 3 -type d | selecta)
 }

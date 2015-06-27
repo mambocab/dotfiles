@@ -1,3 +1,5 @@
-export EDITOR='mvim'
-export VISUAL='mvim'
+export EDITOR='vim'
+export VISUAL='vim'
 export TERM=xterm-256color
+
+export JAVA_HOME=/usr
