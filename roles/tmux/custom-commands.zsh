@@ -8,3 +8,8 @@ function tmss {
     selecta |
     xargs tmux switch-client -t
 }
+
+function tgo {
+    session=${1:-mambocab}
+    tmux attach -t $session || tmux new -s $session
+}
