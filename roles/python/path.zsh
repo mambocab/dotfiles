@@ -1,1 +1,2 @@
 PATH=$HOME/miniconda/bin:$PATH
+export PYTHONDONTWRITEBYTECODE=1
