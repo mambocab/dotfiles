@@ -91,3 +91,13 @@ alias wrks='wrk -s'
 function wcd() {
   cd $(find . -maxdepth 3 -type d | selecta)
 }
+
+function touchpad() {
+  touchpad_query="`synclient | grep TouchpadOff | sed 's/[^0-9]*//g'`"
+  case "$touchpad_query" in
+    0) set_touchpadoff=1 ;;
+    1) set_touchpadoff=0 ;;
+    *) echo got invalid value "$touchpad_query" from synclient ; exit 1 ;;
+  esac
+  synclient TouchpadOff="$set_touchpadoff"
+}
