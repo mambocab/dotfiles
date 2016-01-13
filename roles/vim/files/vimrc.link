@@ -84,6 +84,7 @@ set autoread
 set nojoinspaces
 set backupdir=/var/tmp,/tmp
 set directory=/var/tmp,/tmp
+set nobackup
 set shell=bash
 
 " easy navigation between panes
