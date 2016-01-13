@@ -10,8 +10,8 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     " let Vundle manage Vundle, required
     Plugin 'gmarik/Vundle.vim'
     Plugin 'kien/ctrlp.vim'
-    Plugin 'klen/python-mode'
-    Plugin 'alfredodeza/pytest.vim'
+    " Plugin 'klen/python-mode'
+    " Plugin 'alfredodeza/pytest.vim'
     Plugin 'tell-k/vim-autopep8'
     Plugin 'nvie/vim-flake8'
     Plugin 'Valloric/YouCompleteMe'
@@ -119,9 +119,10 @@ let g:syntastic_ignore_files = ['\.py$']
 let g:pep8_ignore="e501"
 """""""""
 
-let g:pymode_warnings = 1
-let g:pymode_options_max_line_length = 120
-let g:pymode_lint_ignore = "E501"
+let g:flake8_show_in_gutter = 1
+let g:flake8_show_in_file = 1
+
+autocmd BufWritePost *.py call Flake8()
 
 " get rid of annoying parts of autocompletion
 set completeopt=menu
