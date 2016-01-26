@@ -87,7 +87,8 @@ function wrk() {
   fi
 }
 alias wrks='wrk -s'
-alias dtest='wrk -s cassandra-dtest'
+alias dtest='wrk cassandra-dtest'
+alias dtests='wrk -s cassandra-dtest'
 
 function wcd() {
   cd $(find . -maxdepth 3 -type d | selecta)
@@ -102,3 +103,4 @@ function touchpad() {
   esac
   synclient TouchpadOff="$set_touchpadoff"
 }
+alias tp=touchpad
