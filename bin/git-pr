@@ -1,0 +1,83 @@
+#!/usr/bin/env python2.7
+"""
+Usage:
+  git-checkout-pr <pr> [--branch=<branch>] [--remote=<remote>]
+                       [--force] [--fetch-only]
+
+Options:
+  -b <branch> --branch=<branch>  Branch name to check out to. By default, uses pr-<pr_number>
+  -r <remote> --remote=<remote>  Remote to fetch from.
+                                 By default, uses the upstream remote for the 'master' branch.
+  -f --force                     Force update the local branch at <branch>.
+  --fetch-only                   Don't check out the fetched branch.
+"""
+from __future__ import print_function
+
+from subprocess import CalledProcessError, Popen, check_output
+
+from docopt import docopt
+
+
+def Popen_and_assert_success(args, *fargs, **kwargs):
+    """
+    Popen() wrapper that, like subprocess.check_output, fails when the
+    subprocess does, but, by default, uses the parent Python processes' stdout
+    and stderr.
+    """
+    p = Popen(args=args, *fargs, **kwargs)
+    p.wait()
+    if p.returncode:
+        raise CalledProcessError(p.returncode, args)
+
+
+def tracked_remote_for_master():
+    """
+    Returns the name of the upstream remote that the local repository's
+    'master' branch tracks.
+    """
+    cmd = ['git', 'rev-parse', '--abbrev-ref', 'master@{upstream}']
+    return check_output(cmd).split('/')[0]
+
+
+def fetch_pr_from_repo(pr_number, target_branch=None,
+                       repo=None, force=False):
+    """
+    Uses `git fetch` to create or update the local branch named target_branch
+    with the ref at refs/pull/{pr_number}/head.
+
+    Because of the semantics of `git fetch`, this will never update
+    target_branch if target_branch is currently checked out and the repository
+    is not bare. It also will not update target_branch if
+    refs/pull/{pr_number}/head is not a descendent of target_branch, unless
+    force is True.
+    """
+    if not target_branch:
+        target_branch = 'pr-{pr_number}'.format(pr_number=pr_number)
+    if not repo:
+        repo = tracked_remote_for_master()
+
+    ref = 'refs/pull/{pr_number}/head'.format(pr_number=pr_number)
+    ref_with_target_branch_spec = ref + ':' + target_branch
+
+    cmd = ['git', 'fetch', repo, ref_with_target_branch_spec]
+    if force:
+        cmd.append('--force')
+    Popen_and_assert_success(cmd)
+
+
+def check_out_branch(branch):
+    Popen_and_assert_success(['git', 'checkout', branch])
+
+
+if __name__ == '__main__':
+    opts = docopt(__doc__)
+    pr = opts['<pr>']
+    target_branch = opts['--branch'] or 'pr-{pr}'.format(pr=pr)
+    source_remote = opts['--remote'] or tracked_remote_for_master()
+
+    fetch_pr_from_repo(pr_number=pr,
+                       target_branch=target_branch,
+                       repo=source_remote,
+                       force=opts['--force'])
+    if not opts['--fetch-only']:
+        check_out_branch(target_branch)
