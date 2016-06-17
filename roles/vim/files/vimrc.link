@@ -195,6 +195,18 @@ function! SelectaFile(path)
 endfunction
 nnoremap <leader>f :call SelectaFile(".")<cr>
 
+" via http://tartley.com/?p=1277
+" go to defn of tag under the cursor
+fun! MatchCaseTag()
+    let ic = &ic
+    set noic
+    try
+        exe 'tjump ' . expand('<cword>')
+    finally
+       let &ic = ic
+    endtry
+endfun
+nnoremap <silent> <c-]> :call MatchCaseTag()<CR>
 
 let g:VM_Enabled=1
 
