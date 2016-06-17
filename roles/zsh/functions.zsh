@@ -87,7 +87,7 @@ function wrk() {
   fi
 }
 alias wrks='wrk -s'
-alias dtest='wrk cassandra-dtest'
+alias dtest='wrk cassandra-dtest ; git fetch --all'
 alias dtests='wrk -s cassandra-dtest'
 
 function wcd() {
