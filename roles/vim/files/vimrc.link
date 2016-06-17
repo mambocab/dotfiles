@@ -9,9 +9,6 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
 
     " let Vundle manage Vundle, required
     Plugin 'gmarik/Vundle.vim'
-    Plugin 'kien/ctrlp.vim'
-    " Plugin 'klen/python-mode'
-    " Plugin 'alfredodeza/pytest.vim'
     Plugin 'tell-k/vim-autopep8'
     Plugin 'nvie/vim-flake8'
     Plugin 'Valloric/YouCompleteMe'
@@ -19,8 +16,6 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-commentary.git'
     Plugin 'tpope/vim-surround'
-    Plugin 'ntpeters/vim-better-whitespace'
-    " Plugin 'scrooloose/syntastic'
     Plugin 'bitc/vim-hdevtools'
     Plugin 'airblade/vim-gitgutter'
     Plugin 'andrep/vimacs'
@@ -28,6 +23,7 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-dispatch'
     Plugin 'rking/ag.vim'
+    Plugin 'rhysd/vim-crystal'
 
     call vundle#end()
 
