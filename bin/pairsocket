@@ -1,0 +1,13 @@
+#! /bin/sh
+
+if [ "enable" = "$1" ]; then
+    echo enabling
+    sudo usermod -s /bin/bash remotepair
+    touch /tmp/pair
+    chmod 777 /tmp/pair
+else
+    echo disabling
+    sudo usermod -s /sbin/nologin remotepair
+    touch /tmp/pair
+    chmod 770 /tmp/pair
+fi

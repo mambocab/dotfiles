@@ -14,3 +14,10 @@ function tgo {
     session=${1:-mambocab}
     tmux attach -t $session || tmux new -s $session
 }
+
+function tpair {
+    touch /tmp/pair
+    pairsocket enable
+    tmux -S /tmp/pair attach || tmux -S /tmp/pair
+}
+
