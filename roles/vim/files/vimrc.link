@@ -80,7 +80,10 @@ set number
 set wrap linebreak nolist
 set backspace=indent,eol,start
 set ignorecase smartcase
+
 set cursorline
+" hi CursorLine ctermbg=LightGray cterm=None
+
 set autoread
 set nojoinspaces
 set backupdir=/var/tmp,/tmp
