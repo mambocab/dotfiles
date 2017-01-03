@@ -14,4 +14,4 @@ if [ -z "$1" ] ; then
 fi
 
 echo "Yo-ing $1"
-curl --data "api_token=$YO_API_KEY&username=$1" https://api.justyo.co/yo/
+curl --data "api_token=$YO_API_KEY&username=$1" https://api.justyo.co/yo/ >/dev/null 2>&1 &
