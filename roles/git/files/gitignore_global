@@ -17,6 +17,7 @@ Thumbs.db
 *.o
 *.so
 *.pyc
+.eggs/
 
 ## Packages ##
 # it's better to unpack these files and commit the raw source
@@ -29,6 +30,7 @@ Thumbs.db
 *.rar
 *.tar
 *.zip
+*.egg-info
 
 ## Logs and databases ##
 *.log
@@ -36,10 +38,23 @@ Thumbs.db
 *.sqlite
 .ipynb_checkpoints
 
-# LaTeX-produced files
+## LaTeX-produced files ##
 *.aux
 *.bbl
 *.fdb_latexmk
 *.out
 *.synctex.gz
 *.blg
+
+## Text-editor junk ##
+.ropeproject
+
+## pyenv config ##
+.python-version
+
+## Personal-use-only files ##
+t.sh
+.noseids
+.local
+.virtualenv
+results.txt
