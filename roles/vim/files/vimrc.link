@@ -9,7 +9,6 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
 
     " let Vundle manage Vundle, required
     Plugin 'gmarik/Vundle.vim'
-    Plugin 'tell-k/vim-autopep8'
     Plugin 'nvie/vim-flake8'
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'tpope/vim-vinegar'
@@ -19,12 +18,16 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'bitc/vim-hdevtools'
     Plugin 'airblade/vim-gitgutter'
     Plugin 'andrep/vimacs'
-    Plugin 'tommcdo/vim-exchange'
+    " Plugin 'tommcdo/vim-exchange'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-dispatch'
-    Plugin 'rking/ag.vim'
+    " Plugin 'rking/ag.vim'
     Plugin 'rhysd/vim-crystal'
-
+    " tabular has to come before markdown
+    Plugin 'godlygeek/tabular'
+    Plugin 'plasticboy/vim-markdown'
+    Plugin 'mileszs/ack.vim'
+    Plugin 'mgedmin/pythonhelper.vim'
     call vundle#end()
 
     filetype on
