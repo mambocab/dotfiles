@@ -86,8 +86,6 @@ function wrk() {
   fi
 }
 alias wrks='wrk -s'
-alias dtest='wrk cassandra-dtest ; git fetch --all'
-alias dtests='wrk -s cassandra-dtest'
 
 function wcd() {
   cd $(find . -maxdepth 3 -type d | selecta)
