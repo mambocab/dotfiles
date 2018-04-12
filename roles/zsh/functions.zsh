@@ -101,3 +101,37 @@ function touchpad() {
   synclient TouchpadOff="$set_touchpadoff"
 }
 alias tp=touchpad
+
+# Via garybernhardt:
+# By @ieure; copied from https://gist.github.com/1474072
+#
+# It finds a file, looking up through parent directories until it finds one.
+# Use it like this:
+#
+#   $ ls .tmux.conf
+#   ls: .tmux.conf: No such file or directory
+#
+#   $ ls `up .tmux.conf`
+#   /Users/grb/.tmux.conf
+#
+#   $ cat `up .tmux.conf`
+#   set -g default-terminal "screen-256color"
+#
+function up()
+{
+    local DIR=$PWD
+    local TARGET=$1
+    while [ ! -e $DIR/$TARGET -a $DIR != "/" ]; do
+        DIR=$(dirname $DIR)
+    done
+    test $DIR != "/" && echo $DIR/$TARGET
+}
+
+# Via garybernhardt:
+# Switch projects
+function p() {
+    proj=$(ls ~/cstar_src | selecta)
+    if [[ -n "$proj" ]]; then
+        cd ~/cstar_src/$proj
+    fi
+}
