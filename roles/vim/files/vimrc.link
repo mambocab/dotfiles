@@ -115,7 +115,8 @@ set nofoldenable
 let g:haddock_browser = "open"
 
 " via gary bernhardt
-set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+" set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%{TagInStatusLine()}\ %-19(%3l,%02c%03V%)
 imap <c-c> <esc>
 nnoremap <leader><leader> <c-^>
 
