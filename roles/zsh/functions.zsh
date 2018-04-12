@@ -74,7 +74,6 @@ zle -N insert-selecta-path-in-command-line
 bindkey "^S" "insert-selecta-path-in-command-line"
 
 function wrk() {
-  wo cstar_te
   cd ~/cstar_src
   while getopts s opt ; do
     case $opt in
