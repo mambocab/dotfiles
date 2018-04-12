@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""
+Daemon that sleeps the internal display when an external one is connected.
+
+Via Jacob Vlijm at https://askubuntu.com/a/740140
+"""
+
+import subprocess
+import time
+
+
+def disable_monitor_opts(monitor_name):
+    return ('--output', monitor_name, '--off')
+
+
+def enable_monitor_opts(monitor_name):
+    return ('--output', monitor_name, '--auto')
+
+
+class MonitorState(object):
+    INTERNAL = 'eDP1'
+
+    def __init__(self):
+        connected_monitor_lines = (
+            line for line in
+            subprocess.check_output("xrandr").decode("utf-8").splitlines()
+            if " connected " in line
+        )
+        self.connected = {
+            s.split()[0] for s in connected_monitor_lines
+            if self.INTERNAL not in s
+        }
+        print(self)
+
+    def __repr__(self):
+        return '<{cls}, connected={conn}>'.format(cls=self.__class__.__name__,
+                                                  conn=self.connected)
+
+    def __eq__(self, other):
+        return self.connected == other.connected
+
+    def xrandr_command(self, old_monitor_state):
+        return tuple(self._xrandr_command(old_monitor_state))
+
+    def _xrandr_command(self, old_monitor_state):
+        yield 'xrandr'
+        if self.connected:
+            for opt in disable_monitor_opts(self.INTERNAL):
+                yield opt
+            for monitor in self.connected:
+                for opt in enable_monitor_opts(monitor):
+                    yield opt
+            for monitor in old_monitor_state.connected - self.connected:
+                for opt in disable_monitor_opts(monitor):
+                    yield opt
+        else:  # not self.connected
+            for opt in enable_monitor_opts(self.INTERNAL):
+                yield opt
+            # no connected stuff; we can safely disable all
+            for monitor in old_monitor_state.connected:
+                for opt in disable_monitor_opts(monitor):
+                    yield opt
+
+
+if __name__ == '__main__':
+    old_monitor_state = MonitorState()
+    while True:
+        time.sleep(4)
+        new_monitor_state = MonitorState()
+
+        if new_monitor_state != old_monitor_state:
+            cmd = new_monitor_state.xrandr_command(old_monitor_state)
+            print('running `{}`'.format(cmd))
+            subprocess.Popen(cmd)
+
+        old_monitor_state = new_monitor_state
