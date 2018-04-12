@@ -134,6 +134,9 @@ let g:syntastic_ignore_files = ['\.py$']
 let g:pep8_ignore="e501"
 """""""""
 
+" set YouCompleteMe to use whatever python is available
+let g:ycm_python_binary_path = 'python'
+
 let g:flake8_show_in_gutter = 1
 let g:flake8_show_in_file = 1
 
@@ -172,6 +175,7 @@ inoremap <s-tab> <c-n>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>e :edit 
 map <leader>v :vsplit<CR>
+map <leader>s :split<CR>
 cnoremap <expr> %% expand('%:h').'/'
 map <leader>E :edit %%
 map <leader>V :view %%
@@ -220,6 +224,9 @@ fun! MatchCaseTag()
     endtry
 endfun
 nnoremap <silent> <c-]> :call MatchCaseTag()<CR>
+" via http://stackoverflow.com/a/33629584/3408454
+" go to defn of tag under the cursor in a new vertical split
+nnoremap <A-]> :execute "vertical ptag " . expand("<cword>")<CR>
 
 let g:VM_Enabled=1
 
@@ -228,8 +235,22 @@ set winwidth=79
 set modeline
 
 " task runner
+fun! Maybew()
+  if expand("%") != ""
+    :w
+  end
+endfun
 if maparg("<leader>t") == ""
-    map <leader>t :w\|:!./t.sh<cr>
+    " map <leader>t :call Maybew()\|:!./t.sh<cr>
+    map <leader>t :call Maybew()\|:tabedit \|:enew \|setlocal buftype=nofile \|:r !./t.sh<cr>\|gg
+    " map <leader>t :call Maybew()\|:tabedit \|:enew \|setlocal buftype=nofile \|:r !script --return -c './t.sh'<cr>\|gg
+    map <leader>T :call Maybew()\|:tabedit \|:enew \|setlocal buftype=nofile \|:r !./t.sh<cr>\|gg
+    " map <leader>T :call Maybew()\|:tabedit \|:enew \|setlocal buftype=nofile \|:r !script --return -c './t.sh'<cr>\|gg
+endif
+
+" configure ack.vim to use ag
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
 endif
 nnoremap <Leader>a :Ack!<Space>
 
