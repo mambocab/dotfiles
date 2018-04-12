@@ -28,6 +28,12 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'plasticboy/vim-markdown'
     Plugin 'mileszs/ack.vim'
     Plugin 'mgedmin/pythonhelper.vim'
+    Plugin 'AndrewRadev/sideways.vim'
+    " Plugin 'evansalter/vim-checklist'
+    Plugin 'davidoc/taskpaper.vim'
+    Plugin 'vim-syntastic/syntastic'
+    Plugin 'vim-scripts/confluencewiki.vim'
+    Plugin 'tell-k/vim-autopep8'
     call vundle#end()
 
     filetype on
@@ -224,3 +230,15 @@ set modeline
 if maparg("<leader>t") == ""
     map <leader>t :w\|:!./t.sh<cr>
 endif
+nnoremap <Leader>a :Ack!<Space>
+
+" syntastic ssetting
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_sh_shellcheck_post_args = '-e SC2006'
