@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """
 Daemon that sleeps the internal display when an external one is connected.
 
@@ -39,6 +39,9 @@ class MonitorState(object):
     def __eq__(self, other):
         return self.connected == other.connected
 
+    def __ne__(self, other):
+        return not self == other
+
     def xrandr_command(self, old_monitor_state):
         return tuple(self._xrandr_command(old_monitor_state))
 
@@ -69,6 +72,8 @@ if __name__ == '__main__':
         new_monitor_state = MonitorState()
 
         if new_monitor_state != old_monitor_state:
+            print('new: ', new_monitor_state)
+            print('old: ', old_monitor_state)
             cmd = new_monitor_state.xrandr_command(old_monitor_state)
             print('running `{}`'.format(cmd))
             subprocess.Popen(cmd)
