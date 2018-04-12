@@ -156,3 +156,6 @@ exec --no-startup-id /opt/extras.ubuntu.com/indicator-brightness/indicator-brigh
 bar {
         status_command i3status
 }
+
+# only show borders on multi-window screens
+hide_edge_borders smart
