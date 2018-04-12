@@ -42,3 +42,4 @@ alias gistp='gist -p'
 alias agpy='ag --python'
 alias agj='ag --java'
 
+alias love-too=sudo
