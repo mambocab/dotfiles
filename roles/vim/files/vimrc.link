@@ -13,6 +13,7 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'tpope/vim-vinegar'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-rhubarb'
     Plugin 'tpope/vim-commentary.git'
     Plugin 'tpope/vim-surround'
     Plugin 'bitc/vim-hdevtools'
@@ -34,6 +35,9 @@ if isdirectory(expand("$HOME/.vim/bundle/Vundle.vim"))
     Plugin 'vim-syntastic/syntastic'
     Plugin 'vim-scripts/confluencewiki.vim'
     Plugin 'tell-k/vim-autopep8'
+    Plugin 'tmhedberg/SimpylFold'
+
+    Plugin 'Konfekt/FastFold'
     call vundle#end()
 
     filetype on
@@ -254,7 +258,7 @@ if executable('ag')
 endif
 nnoremap <Leader>a :Ack!<Space>
 
-" syntastic ssetting
+" syntastic setting
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -264,3 +268,4 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_sh_shellcheck_post_args = '-e SC2006'
+let g:syntastic_rst_checkers = ['rstcheck']

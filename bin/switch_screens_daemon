@@ -18,7 +18,7 @@ def enable_monitor_opts(monitor_name):
 
 
 class MonitorState(object):
-    INTERNAL = 'eDP1'
+    INTERNAL = 'eDP-1'
 
     def __init__(self):
         connected_monitor_lines = (
