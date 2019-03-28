@@ -13,8 +13,11 @@ def disable_monitor_opts(monitor_name):
     return ('--output', monitor_name, '--off')
 
 
-def enable_monitor_opts(monitor_name):
-    return ('--output', monitor_name, '--auto')
+def enable_monitor_opts(monitor_name, mode=None):
+    opts = ['--output', monitor_name]
+    if mode:
+        return tuple(opts + ['--mode', mode])
+    return tuple(opts + ['--auto'])
 
 
 class MonitorState(object):
@@ -57,7 +60,7 @@ class MonitorState(object):
                 for opt in disable_monitor_opts(monitor):
                     yield opt
         else:  # not self.connected
-            for opt in enable_monitor_opts(self.INTERNAL):
+            for opt in enable_monitor_opts(self.INTERNAL, mode='1920x1080'):
                 yield opt
             # no connected stuff; we can safely disable all
             for monitor in old_monitor_state.connected:
