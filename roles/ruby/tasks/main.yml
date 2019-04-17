@@ -2,4 +2,20 @@
   homebrew: name=ruby state=present
   when: ansible_os_family == "Darwin"
 
-# TODO: Fedora and Debian
+- name: Download rbenv installer
+  get_url:
+    url: https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer
+    dest: /tmp/rbenv-installer.sh
+
+- name: Install GCC
+  apt: pkg=gcc
+  when: ansible_os_family == "Debian"
+  become: yes
+
+- name: Install make
+  apt: pkg=build-essential
+  when: ansible_os_family == "Debian"
+  become: yes
+
+- name: Run rbenv installer
+  command: bash /tmp/rbenv-installer.sh
