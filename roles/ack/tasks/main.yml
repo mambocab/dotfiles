@@ -1,5 +1,5 @@
-- name: install ack-grep
-  apt: pkg=ack-grep
+- name: install ag
+  apt: pkg=silversearcher-ag
   when: ansible_os_family == "Debian"
   sudo: yes
 
