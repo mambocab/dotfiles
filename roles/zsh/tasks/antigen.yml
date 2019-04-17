@@ -2,7 +2,7 @@
   file: dest="{{ dotfiles_user_home }}/.antigen" state=directory
 
 - name: Install antigen
-  get_url: url=https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh dest="{{ dotfiles_user_home }}/.antigen/antigen.zsh" mode=755
+  get_url: url=https://git.io/antigen dest="{{ dotfiles_user_home }}/.antigen/antigen.zsh" mode=755
 
 - name: Link antigenrc file
   file: src="{{ dotfiles_home }}/roles/zsh/files/antigenrc.link" dest="{{ dotfiles_user_home }}/.antigenrc" state=link
