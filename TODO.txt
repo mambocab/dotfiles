@@ -1,3 +1,6 @@
+- install pyenv
+- install powerline
+- port "sudo" to "become"
 - set up font installation
 - set up desktop image copying
 - $ZSH is a misnomer. Why not just $DOTFILES?
