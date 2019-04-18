@@ -1,7 +1,12 @@
-
 - name: Make sure zsh is installed
   apt: name=zsh state=present
   sudo: yes
 
 - include: antigen.yml
   when: zsh_antigen
+
+- name: Install xclip (dependency for pb{copy,paste})
+  apt:
+    name: xclip
+    state: present
+  become: yes
