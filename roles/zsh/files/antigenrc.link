@@ -11,6 +11,11 @@ antigen bundle robbyrussell/oh-my-zsh plugins/cabal
 antigen bundle robbyrussell/oh-my-zsh plugins/fasd
 antigen bundle robbyrussell/oh-my-zsh lib
 
+# install pure. order matters.
+antigen bundle mafredri/zsh-async
+antigen bundle sindresorhus/pure
+# /install pure
+
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
