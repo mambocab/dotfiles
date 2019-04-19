@@ -1,10 +1,10 @@
+- name: Download pyenv installer
+  get_url:
+    url: https://pyenv.run
+    dest: /tmp/pyenv-installer.sh
 
-- name: Check if miniconda is installed
-  stat: path="{{ '~/miniconda' | expanduser }}"
-  register: miniconda_stat
-
-- include: install.yml
-  when: not miniconda_stat.stat.exists
+- name: Run pyenv installer
+  command: bash /tmp/pyenv-installer.sh
 
 - name: Check if pytest.ini file exists
   stat: path="{{dotfiles_user_home}}/pytest.ini"
