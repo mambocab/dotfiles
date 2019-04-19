@@ -2,20 +2,36 @@
   homebrew: name=ruby state=present
   when: ansible_os_family == "Darwin"
 
+- name: Install GCC (rbenv installer dependency)
+  apt: pkg=gcc
+  when: ansible_os_family == "Debian"
+  become: yes
+
+- name: Install make (rbenv installer dependency)
+  apt: pkg=build-essential
+  when: ansible_os_family == "Debian"
+  become: yes
+
 - name: Download rbenv installer
   get_url:
     url: https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer
     dest: /tmp/rbenv-installer.sh
 
-- name: Install GCC
-  apt: pkg=gcc
-  when: ansible_os_family == "Debian"
-  become: yes
-
-- name: Install make
-  apt: pkg=build-essential
-  when: ansible_os_family == "Debian"
-  become: yes
-
 - name: Run rbenv installer
   command: bash /tmp/rbenv-installer.sh
+
+- name: Install ruby build dependencies
+  apt:
+    name: "{{item}}"
+    state: installed
+  with_items:
+    - libssl-dev
+    - libreadline-dev
+    - zlib1g-dev
+  become: yes
+
+- name: Install a ruby
+  command: rbenv install 2.6.3
+
+- name: Set a global ruby
+  command: rbenv global 2.6.3
