@@ -127,12 +127,13 @@ fpath+="$DASHT_DIR/etc/zsh/completions"
 export MANPATH="$DASHT_DIR/man:$MANPATH"
 
 # Dotfiles management.
+#
 # One-time setup:
-#   git clone --bare git@github.com:mambocab/dotfiles.git $DOTFILES_DIR
+#   git clone --bare git@github.com:mambocab/dotfiles.git ~/.dotfiles
 #   dotfiles config --local status.showUntrackedFiles no
-# i.e. ~ becomes a worktree managed by git, with the repository itself managed in $DOTFILES_DIR. And we can run `git status`
+# i.e. ~ becomes a worktree managed by git, with the repository itself managed in ~/.dotfiles. And we can run `git status`
 # without git complaining that everything in your home dir isn't tracked.
-export DOTFILES_DIR=$HOME/.config/dotfiles
+#
 # Use `dotfiles` like `git` but scoped to our specific setup.
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
