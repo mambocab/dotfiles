@@ -120,7 +120,9 @@ function rgp {
 }
 
 # Experimental: dasht, a Dash-inspired docs browser.
-# One-time setup: git clone git@github.com:sunaku/dasth.git $DASHT_DIR
+# One-time setup:
+#   mkdir ~/opt
+#   git clone git@github.com:sunaku/dasht.git $DASHT_DIR
 export DASHT_DIR=$HOME/opt/dasht
 path+="$DASHT_DIR/bin"
 fpath+="$DASHT_DIR/etc/zsh/completions"
