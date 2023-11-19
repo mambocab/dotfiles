@@ -10,16 +10,16 @@ then
 fi
   
 # Use .localrc for SUPER SECRET STUFF that you don't want in your public, versioned repo.
-if [[ -a ~/.localrc ]]
+if [[ -a $HOME/.localrc ]]
 then
-  source ~/.localrc
+  source $HOME/.localrc
 fi
 
 # Style.
 eval "$(starship init zsh)"
 
 # Hombrew -> zsh.
-export PATH="/opt/homebrew/bin:$PATH:/usr/bin:.dotfiles/bin/"
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:/usr/bin:.dotfiles/bin/"
 export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 
 # zsh interaction configuration.
@@ -56,7 +56,7 @@ autoload -Uz compinit
 () {
   setopt extendedglob local_options
 
-  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
     compinit
   else
     compinit -C
@@ -89,8 +89,7 @@ setopt interactive_comments
 # Python.
 # Load pyenv lazily.
 # via https://github.com/davidparsson/zsh-pyenv-lazy/blob/master/pyenv-lazy.plugin.zsh
-export PYENV_ROOT="~/.pyenv"
-export PATH="${PYENV_ROOT}/bin:${PYENV_ROOT}/shims:${PATH}"
+export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_SHELL=zsh
 function pyenv() {
   unset -f pyenv
@@ -102,7 +101,7 @@ function pyenv() {
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
 # Haskell.
-[ -f "~/.ghcup/env" ] && source "~/.ghcup/env"
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 
 
 # VS Code.
@@ -114,7 +113,7 @@ bindkey -e
 eval `ssh-agent`
 
 # RipGrep.
-export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 # Paged and pretty (colors, headers, and line numbers).
 function rgp {
   rg -p $"@" | less -RFX
@@ -122,7 +121,7 @@ function rgp {
 
 # Experimental: dasht, a Dash-inspired docs browser.
 # One-time setup: git clone git@github.com:sunaku/dasth.git $DASHT_DIR
-export DASHT_DIR=~/opt/dasht
+export DASHT_DIR=$HOME/opt/dasht
 path+="$DASHT_DIR/bin"
 fpath+="$DASHT_DIR/etc/zsh/completions"
 export MANPATH="$DASHT_DIR/man:$MANPATH"
