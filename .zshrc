@@ -137,6 +137,9 @@ export DOTFILES_DIR=$HOME/.config/dotfiles
 # Use `dotfiles` like `git` but scoped to our specific setup.
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
+# General-purpose aliases.
+alias g=git
+
 if [[ -n "$ZSHRC_PROFILE" ]]
 then
   zprof
