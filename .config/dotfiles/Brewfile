@@ -8,6 +8,9 @@ brew "starship"
 cask "firefox"
 cask "wezterm"
 
+# Python.
+brew "ruff"
+
 # Fonts.
 cask "font-ia-writer-duo"
 cask "font-ia-writer-mono"

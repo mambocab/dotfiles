@@ -94,6 +94,7 @@ export PATH="${PYENV_ROOT}/bin:${PYENV_ROOT}/shims:${PATH}"
 export PYENV_SHELL=zsh
 function pyenv() {
   unset -f pyenv
+  eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   pyenv $@
 }
