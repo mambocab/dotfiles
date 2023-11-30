@@ -1,0 +1,65 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+[aws]
+symbol = '󰸏 '
+format = '[$symbol$profile in  $region]($style) '
+style = 'bright-yellow bold'
+force_display = true
+[aws.region_aliases]
+us-east-1 = 'nova'
+
+[docker_context]
+disabled = true
+
+[gcloud]
+symbol = ' '
+disabled = true
+
+[git_branch]
+symbol = ' '
+ignore_branches = ['development', 'main', 'master']
+
+[git_metrics]
+disabled = false
+only_nonzero_diffs = true
+format = '([ $added]($added_style))([ $deleted]($deleted_style)(white))'
+
+[golang]
+symbol = '󰟓 '
+
+[helm]
+symbol = '󰷀 '
+
+# [kubernetes]
+# disabled = true
+
+[package]
+symbol = '󰏗 '
+
+[python]
+symbol = ' '
+pyenv_version_name = true
+# format = '[$symbol$version$virtualenv]($style) '
+style = 'bright-green bold'
+
+[terraform]
+symbol = '󱁢 '
+
+## Experimental
+[status]
+disabled = false
+
+symbol = '󰀦 '
+not_executable_symbol = '󰍷 '
+not_found_symbol = '󱈍 '
+sigint_symbol = '󰙧 '
+
+map_symbol = true
+pipestatus = true
+
+[sudo]
+disabled = false
