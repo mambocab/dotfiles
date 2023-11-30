@@ -4,7 +4,7 @@ My dotfiles.
 
 ## Theory of Operation
 
-This manages dotfiles via the bare-git-repo method. In this method, you simply let your dotfiles live where they're used, in `~`, and version them in a separate, bare, git repository. See `./.config/dotfiles` for setup. Credit to @teamsnelgrove for [pointing me to this method][snelgrove] and to HN user StreakyCobra for [sharing the method to begin with][streakycobra].
+This manages dotfiles via the bare-git-repo method. In this method, you simply let your dotfiles live where they're used, in `~`, and version them in a separate, bare, git repository. See `.zshrc` for setup. Credit to @teamsnelgrove for [pointing me to this method][snelgrove] and to HN user StreakyCobra for [sharing the method to begin with][streakycobra].
 
 ## Guiding Principles
 
