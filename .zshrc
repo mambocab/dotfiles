@@ -86,6 +86,7 @@ setopt interactive_comments
 # For now, let's experiment with the no-plugins zsh experience.
 
 # Languages.
+#
 # Python.
 # Load pyenv lazily.
 # via https://github.com/davidparsson/zsh-pyenv-lazy/blob/master/pyenv-lazy.plugin.zsh
@@ -97,12 +98,12 @@ function pyenv() {
   eval "$(pyenv init -)"
   pyenv $@
 }
+#
 # Go.
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
 # Haskell.
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
-
 
 # VS Code.
 # ^a, ^e, and ^r should work in the VS Code terminal. The VS Code terminal will silently change editing mode based on
