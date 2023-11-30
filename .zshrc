@@ -142,6 +142,98 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # General-purpose aliases.
 alias g=git
+alias pzf="fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+
+# General-purpose functions.
+#
+# Creates a new scratch directory and cds to it
+# via http://ku1ik.com/2012/05/04/scratch-dir.html
+function scratch {
+  cur_dir="$HOME/scratch"
+  new_dir="$HOME/tmp/scratch-`date +'%s'`"
+  mkdir -p $new_dir
+  ln -nfs $new_dir $cur_dir
+  cd $cur_dir
+  echo "New scratch dir ready for grinding ;>"
+}
+#
+# mk and cd.
+function mkcd { mkdir -p $1 && cd $1 }
+#
+# Gary Bernhardt's Selecta shortcuts.
+# Run Selecta in the current working directory, appending the selected path, if
+# any, to the current command, followed by a space.
+function insert-selecta-path-in-command-line() {
+    local selected_path
+    # Print a newline or we'll clobber the old prompt.
+    echo
+    # Find the path; abort if the user doesn't select anything.
+    # GRB's original: selected_path=$(fd -t f . | selecta) || return
+    selected_path=$(fd -t f . | fzf) || return
+    # Escape the selected path, since we're inserting it into a command line.
+    # E.g., spaces would cause it to be multiple arguments instead of a single
+    # path argument.
+    selected_path=$(printf '%q' "$selected_path")
+    # Append the selection to the current command buffer.
+    eval 'LBUFFER="$LBUFFER$selected_path "'
+    # Redraw the prompt since Selecta has drawn several new lines of text.
+    zle reset-prompt
+}
+# Create the zle widget that runs the function.
+zle -N insert-selecta-path-in-command-line
+# By default, ^S freezes terminal output and ^Q resumes it. Disable that so
+# that those keys can be used for...
+unsetopt flowcontrol
+# ... the newly created widget.
+bindkey "^S" "insert-selecta-path-in-command-line"
+#
+# Via garybernhardt:
+# By @ieure; copied from https://gist.github.com/1474072
+#
+# It finds a file, looking up through parent directories until it finds one.
+# Use it like this:
+#
+#   $ ls .tmux.conf
+#   ls: .tmux.conf: No such file or directory
+#
+#   $ ls `up .tmux.conf`
+#   /Users/grb/.tmux.conf
+#
+#   $ cat `up .tmux.conf`
+#   set -g default-terminal "screen-256color"
+function up()
+{
+    local DIR=$PWD
+    local TARGET=$1
+    while [ ! -e $DIR/$TARGET -a $DIR != "/" ]; do
+        DIR=$(dirname $DIR)
+    done
+    test $DIR != "/" && echo $DIR/$TARGET
+}
+#
+# go-objdump colorizes and reformats output of `go tool objdump`
+# - it inserts an empty line after unconditional control-flow modifying instructions
+ (JMP, RET, UD2)
+# - it colors calls/returns in green
+# - it colors traps (UD2) in red
+# - it colors jumps (both conditional and unconditional) in blue
+# - it colors padding/nops in violet
+# - it colors the function name in yellow
+# - it unindent the function body
+function go-objdump() {
+  go tool objdump "$@" |
+    gsed -E "
+      s/^  ([^\t]+)(.*)/\1  \2/
+      s,^(TEXT )([^ ]+)(.*),$(tput setaf 3)\\1$(tput bold)\\2$(tput sgr0)$(tput seta
+f 3)\\3$(tput sgr0),
+      s/((JMP|RET|UD2).*)\$/\1\n/
+      s,.*(CALL |RET).*,$(tput setaf 2)&$(tput sgr0),
+      s,.*UD2.*,$(tput setaf 1)&$(tput sgr0),
+      s,.*J[A-Z]+.*,$(tput setaf 4)&$(tput sgr0),
+      s,.*(INT \\\$0x3|NOP).*,$(tput setaf 5)&$(tput sgr0),
+    "
+}
+
 
 if [[ -n "$ZSHRC_PROFILE" ]]
 then
