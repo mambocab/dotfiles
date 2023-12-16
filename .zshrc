@@ -101,6 +101,7 @@ export GOPATH=$(go env GOPATH)
 # the contents of EDITOR or VISUAL. We don't want that, so explicitly set it to Emacs mode.
 # See https://github.com/microsoft/vscode-docs/issues/5221#issuecomment-1061081538.
 bindkey -e
+
 # SSH.
 eval `ssh-agent`
 
