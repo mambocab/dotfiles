@@ -66,5 +66,5 @@ config.allow_square_glyphs_to_overflow_width = "Always"
 -- config.color_scheme = 'seoulbones_light'
 -- config.color_scheme = 'Yousai (terminal.sexy)'
 
--- return config should always be the last line
+-- This should always be the last line.
 return config
