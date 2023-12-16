@@ -12,12 +12,14 @@ then
   set -o xtrace
   zmodload zsh/zprof
 fi
-  
-# Use .localrc for SUPER SECRET STUFF that you don't want in your public, versioned repo.
-if [[ -a $HOME/.localrc ]]
+
+if [ ! -f $HOME/.gitconfig_local ]
 then
-  source $HOME/.localrc
+  >&2 echo "Configure your git user settings in $HOME/.gitconfig_local -- see ~/.gitconfig for template."
 fi
+
+# Use .localrc for SUPER SECRET STUFF that you don't want in your public, versioned repo.
+[ -f $HOME/.localrc ] && source $HOME/.localrc
 
 # Style.
 eval "$(starship init zsh)"
