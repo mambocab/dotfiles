@@ -21,3 +21,4 @@ cask "font-monaspace"
 
 # Apps.
 cask "firefox"
+cask "1password"
