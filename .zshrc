@@ -84,8 +84,8 @@ bindkey '^x^e' edit-command-line
 # able to use comments.
 setopt interactive_comments
 
-# Use /opt/homebrew rather than brew --prefix -- so slow!
-. /opt/homebrew/etc/profile.d/autojump.sh
+# Initialize autojump (aka j).
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 # For now, let's experiment with the no-plugins zsh experience.
 
@@ -107,7 +107,7 @@ function pyenv() {
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
 # Haskell.
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
+[ -f $HOME/.ghcup/env ] && source $HOME/.ghcup/env
 
 # VS Code.
 # ^a, ^e, and ^r should work in the VS Code terminal. The VS Code terminal will silently change editing mode based on
