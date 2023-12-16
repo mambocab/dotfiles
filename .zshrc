@@ -131,12 +131,18 @@ alias pzf="fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:pr
 #
 # Creates a new scratch directory and cds to it
 # via http://ku1ik.com/2012/05/04/scratch-dir.html
+# README behavior by @mambocab.
 function scratch {
+  # ~/scratch is a symlink to the current scratch dir...
   cur_dir="$HOME/scratch"
-  new_dir="$HOME/tmp/scratch-`date +'%s'`"
+  # ... which is named for the current date and time. (Altered from original impl, which used seconds since the Epoch
+  # and was hard to read.)
+  new_dir="$HOME/tmp/scratch-`date +%F_%H-%M-%S`"
   mkdir -p $new_dir
   ln -nfs $new_dir $cur_dir
   cd $cur_dir
+  # Pipe all arguments into a README in case you ever want to figure out what this dir was for.
+  [ $# -ne 0 ] && echo "$@" > README
   echo "New scratch dir ready for grinding ;>"
 }
 #
