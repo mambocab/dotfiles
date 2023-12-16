@@ -6,6 +6,8 @@ brew "direnv"
 brew "helix"
 brew "starship"
 cask "firefox"
+brew "fd"
+brew "fzf"
 cask "wezterm"
 
 # Python.
