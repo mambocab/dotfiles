@@ -39,8 +39,8 @@ bindkey "^[[3~"  delete-char
 bindkey "^[3;5~" delete-char
 
 # Editor defaults.
-EDITOR=hx
-VISUAL=hx
+export EDITOR=hx
+export VISUAL=hx
 
 # Completion.
 # Don't autocorrect me.
