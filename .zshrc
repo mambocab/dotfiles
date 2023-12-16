@@ -90,19 +90,6 @@ setopt interactive_comments
 # For now, let's experiment with the no-plugins zsh experience.
 
 # Languages.
-#
-# Python.
-# Load pyenv lazily.
-# via https://github.com/davidparsson/zsh-pyenv-lazy/blob/master/pyenv-lazy.plugin.zsh
-export PYENV_ROOT="$HOME/.pyenv"
-export PYENV_SHELL=zsh
-function pyenv() {
-  unset -f pyenv
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-  pyenv $@
-}
-#
 # Go.
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
