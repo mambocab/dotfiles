@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+# Hombrew.
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:/usr/bin:.dotfiles/bin/"
+export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
+
 # Load direnv.
 eval "$(direnv hook zsh)"
 
@@ -17,10 +21,6 @@ fi
 
 # Style.
 eval "$(starship init zsh)"
-
-# Hombrew -> zsh.
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:/usr/bin:.dotfiles/bin/"
-export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 
 # zsh interaction configuration.
 # Up and down search for commands starting with the current buffer, if anything's populated in that buffer.
@@ -212,8 +212,7 @@ function up()
 }
 #
 # go-objdump colorizes and reformats output of `go tool objdump`
-# - it inserts an empty line after unconditional control-flow modifying instructions
- (JMP, RET, UD2)
+# - it inserts an empty line after unconditional control-flow modifying instructions (JMP, RET, UD2)
 # - it colors calls/returns in green
 # - it colors traps (UD2) in red
 # - it colors jumps (both conditional and unconditional) in blue
