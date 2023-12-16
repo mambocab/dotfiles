@@ -44,25 +44,27 @@ config.font = wezterm.font_with_fallback { "Monaspace Neon", }
 -- Makes large-width characters, which I use with starship, behave more intuitively, at least to my brain.
 config.allow_square_glyphs_to_overflow_width = "Always"
 
--- Color schemes, including some nice ones I'm not using today.
-config.color_scheme = "Apathy (base16)"
-config.color_scheme = "Sagelight (base16)"
+-- Color schemes, including some nice ones I'm not using today. Uncomment to use.
+--
+-- Dark.
+-- config.color_scheme = "Apathy (base16)"
+-- config.color_scheme = "terafox"
+-- config.color_scheme = 'Brush Trees Dark (base16)'
+-- config.color_scheme = 'wilmersdorf'
+--
+-- Light.
 -- config.color_scheme = "Atelier Estuary Light (base16)"
 -- config.color_scheme = "Atelierforest (light) (terminal.sexy)"
 -- config.color_scheme = "Catppuccin Latte"
--- config.color_scheme = 'Brush Trees Dark (base16)'
+-- config.color_scheme = "Sagelight (base16)"
 -- config.color_scheme = 'Eighties (light) (terminal.sexy)'
 -- config.color_scheme = 'Harmonic16 Light (base16)'
 -- config.color_scheme = 'Mostly Bright (terminal.sexy)'
 -- config.color_scheme = 'Ocean (light) (terminal.sexy)'
 -- config.color_scheme = 'PaperColor Light (base16)'
--- config.color_scheme = 'Rosé Pine Dawn (Gogh)'
 -- config.color_scheme = 'rose-pine-dawn'
-config.color_scheme = 'seoulbones_light'
--- config.color_scheme = 'wilmersdorf'
+-- config.color_scheme = 'seoulbones_light'
 -- config.color_scheme = 'Yousai (terminal.sexy)'
-
--- config.color_scheme = 'Apathy (base16)'
 
 -- return config should always be the last line
 return config
