@@ -1,12 +1,7 @@
 #!/usr/bin/env zsh
 
-# Hombrew.
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:/usr/bin:.dotfiles/bin/"
-export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
-
-# Load direnv.
-eval "$(direnv hook zsh)"
-
+# If profiling shell startup, set ZSHRC_PROFILE.
+# ZSHRC_PROFILE=1
 if [[ -n "$ZSHRC_PROFILE" ]]
 then
   set -o xtrace
@@ -17,6 +12,13 @@ if [ ! -f $HOME/.gitconfig_local ]
 then
   >&2 echo "Configure your git user settings in $HOME/.gitconfig_local -- see ~/.gitconfig for template."
 fi
+
+# Hombrew.
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:/usr/bin:.dotfiles/bin/"
+export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
+
+# Load direnv.
+eval "$(direnv hook zsh)"
 
 # Use .localrc for SUPER SECRET STUFF that you don't want in your public, versioned repo.
 [ -f $HOME/.localrc ] && source $HOME/.localrc
