@@ -108,9 +108,7 @@ eval `ssh-agent`
 # RipGrep.
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 # Paged and pretty (colors, headers, and line numbers).
-function rgp {
-  rg -p $"@" | less -RFX
-}
+function rgp { rg -p $"@" | less -RFX }
 
 # Dotfiles management.
 #
@@ -125,6 +123,7 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # General-purpose aliases.
 alias g=git
+# Mnemonic: "paged fzf".
 alias pzf="fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 
 # General-purpose functions.
