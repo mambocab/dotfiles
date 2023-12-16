@@ -111,15 +111,6 @@ function rgp {
   rg -p $"@" | less -RFX
 }
 
-# Experimental: dasht, a Dash-inspired docs browser.
-# One-time setup:
-#   mkdir ~/opt
-#   git clone git@github.com:sunaku/dasht.git $DASHT_DIR
-export DASHT_DIR=$HOME/opt/dasht
-path+="$DASHT_DIR/bin"
-fpath+="$DASHT_DIR/etc/zsh/completions"
-export MANPATH="$DASHT_DIR/man:$MANPATH"
-
 # Dotfiles management.
 #
 # One-time setup:
@@ -224,6 +215,14 @@ f 3)\\3$(tput sgr0),
     "
 }
 
+# Experimental: dasht, a Dash-inspired docs browser.
+# One-time setup:
+#   mkdir ~/opt
+#   git clone git@github.com:sunaku/dasht.git $DASHT_DIR
+export DASHT_DIR=$HOME/opt/dasht
+path+="$DASHT_DIR/bin"
+fpath+="$DASHT_DIR/etc/zsh/completions"
+export MANPATH="$DASHT_DIR/man:$MANPATH"
 
 if [[ -n "$ZSHRC_PROFILE" ]]
 then
