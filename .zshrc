@@ -137,6 +137,7 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 # > The more time you spend with Unix, the more you realize how much the folks from Bell Labs hated typing.
 # -- Dr. Drang, *Some `bc` stuff* (https://leancrew.com/all-this/2021/02/some-bc-stuff/)
 alias g=git
+alias pu=pueue
 # Mnemonic: "paged fzf".
 alias pzf="fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 
