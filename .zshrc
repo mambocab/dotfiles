@@ -133,6 +133,9 @@ function rgp { rg -p $"@" | less -RFX }
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # General-purpose aliases.
+#
+# > The more time you spend with Unix, the more you realize how much the folks from Bell Labs hated typing.
+# -- Dr. Drang, *Some `bc` stuff* (https://leancrew.com/all-this/2021/02/some-bc-stuff/)
 alias g=git
 # Mnemonic: "paged fzf".
 alias pzf="fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
