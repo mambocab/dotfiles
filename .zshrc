@@ -236,6 +236,10 @@ f 3)\\3$(tput sgr0),
     "
 }
 
+# Experimental: cool interactive history with atuin.
+# One-time setup: brew install atuin
+type atuin > /dev/null && eval "$(atuin init zsh)"
+
 # Experimental: dasht, a Dash-inspired docs browser.
 # One-time setup:
 #   mkdir ~/opt
