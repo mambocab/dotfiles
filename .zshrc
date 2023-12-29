@@ -249,6 +249,11 @@ path+="$DASHT_DIR/bin"
 fpath+="$DASHT_DIR/etc/zsh/completions"
 export MANPATH="$DASHT_DIR/man:$MANPATH"
 
+# Experimental: jabba Java version manager.
+#
+# Maybe this should be loaded on-demand or just used in .envrc files as necessary.
+[ -s "/opt/homebrew/opt/jabba/share/jabba/jabba.sh" ] && . "/opt/homebrew/opt/jabba/share/jabba/jabba.sh"
+
 if [[ -n "$ZSHRC_PROFILE" ]]
 then
   zprof
