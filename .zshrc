@@ -222,18 +222,18 @@ function up()
 # - it colors padding/nops in violet
 # - it colors the function name in yellow
 # - it unindent the function body
+# via https://gist.github.com/CAFxX/332b425634f12ccbb7a1eef074da19bf
 function go-objdump() {
-  go tool objdump "$@" |
-    gsed -E "
-      s/^  ([^\t]+)(.*)/\1  \2/
-      s,^(TEXT )([^ ]+)(.*),$(tput setaf 3)\\1$(tput bold)\\2$(tput sgr0)$(tput seta
-f 3)\\3$(tput sgr0),
-      s/((JMP|RET|UD2).*)\$/\1\n/
-      s,.*(CALL |RET).*,$(tput setaf 2)&$(tput sgr0),
-      s,.*UD2.*,$(tput setaf 1)&$(tput sgr0),
-      s,.*J[A-Z]+.*,$(tput setaf 4)&$(tput sgr0),
-      s,.*(INT \\\$0x3|NOP).*,$(tput setaf 5)&$(tput sgr0),
-    "
+    go tool objdump "$@" |
+                gsed -E "
+                        s/^  ([^\t]+)(.*)/\1  \2/
+                        s,^(TEXT )([^ ]+)(.*),$(tput setaf 3)\\1$(tput bold)\\2$(tput sgr0)$(tput setaf 3)\\3$(tput sgr0),
+                        s/((JMP|RET|UD2).*)\$/\1\n/
+                        s,.*(CALL |RET).*,$(tput setaf 2)&$(tput sgr0),
+                        s,.*UD2.*,$(tput setaf 1)&$(tput sgr0),
+                        s,.*J[A-Z]+.*,$(tput setaf 4)&$(tput sgr0),
+                        s,.*(INT \\\$0x3|NOP).*,$(tput setaf 5)&$(tput sgr0),
+                        "
 }
 
 # Experimental: cool interactive history with atuin.
