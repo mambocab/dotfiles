@@ -254,6 +254,14 @@ export MANPATH="$DASHT_DIR/man:$MANPATH"
 # Maybe this should be loaded on-demand or just used in .envrc files as necessary.
 [ -s "/opt/homebrew/opt/jabba/share/jabba/jabba.sh" ] && . "/opt/homebrew/opt/jabba/share/jabba/jabba.sh"
 
+# Experimental: local-only config versioning.
+# One-time setup:
+#   git init --bare ~/.localconf.git
+#   localconf config --local status.showUntrackedFiles no
+# As with the dotfiles alias, ~ becomes a worktree managed by git, with the repository itself managed in ~/.dotfiles.
+# And we can run `git status` without git complaining that everything in your home dir isn't tracked.
+alias localconf='git --git-dir=$HOME/.localconf.git --work-tree=$HOME'
+
 if [[ -n "$ZSHRC_PROFILE" ]]
 then
   zprof
