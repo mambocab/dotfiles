@@ -88,7 +88,7 @@ export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 # exit to set the zsh buffer to the results of your editing. Via https://nuclearsquid.com/writings/edit-long-commands
 # and https://blog.thecodewhisperer.com/permalink/edit-then-execute
 autoload -U edit-command-line
-zle -N edit-commandline
+zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 # These command-editing tools can encourage a edit/execute loop for multiline commands. In those cases it's nice to be
