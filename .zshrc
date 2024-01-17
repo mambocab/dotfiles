@@ -67,14 +67,20 @@ unsetopt correct_all
 # - '.' matches "regular files"
 # - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
 # via https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-3109177
+#
+# JW added bashcompinit as well, which is required for certain Python CLI tools, like pipx, that use
+# `register-python-argcomplete`.
 autoload -Uz compinit
+autoload -U bashcompinit
 () {
   setopt extendedglob local_options
 
   if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
     compinit
+    bashcompinit
   else
     compinit -C
+    bashcompinit -C
   fi
 }
 # Smart-ish-case completion -- lowercase letters match uppercase letters but not the other way around.
