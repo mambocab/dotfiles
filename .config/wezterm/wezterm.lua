@@ -39,7 +39,7 @@ config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 
 -- Text.
-config.font_size = 18
+config.font_size = 16
 config.font = wezterm.font_with_fallback { "Monaspace Neon", }
 -- Makes large-width characters, which I use with starship, behave more intuitively, at least to my brain.
 config.allow_square_glyphs_to_overflow_width = "Always"
