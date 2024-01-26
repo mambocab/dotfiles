@@ -2,14 +2,12 @@
 
 # If profiling shell startup, set ZSHRC_PROFILE.
 # ZSHRC_PROFILE=1
-if [[ -n "$ZSHRC_PROFILE" ]]
-then
+if [[ -n "$ZSHRC_PROFILE" ]]; then
   set -o xtrace
   zmodload zsh/zprof
 fi
 
-if [ ! -f $HOME/.gitconfig_local ]
-then
+if [ ! -f $HOME/.gitconfig_local ]; then
   >&2 echo "Configure your git user settings in $HOME/.gitconfig_local -- see ~/.gitconfig for template."
 fi
 
@@ -271,7 +269,6 @@ export MANPATH="$DASHT_DIR/man:$MANPATH"
 # And we can run `git status` without git complaining that everything in your home dir isn't tracked.
 alias localconf='git --git-dir=$HOME/.localconf.git --work-tree=$HOME'
 
-if [[ -n "$ZSHRC_PROFILE" ]]
-then
+if [[ -n "$ZSHRC_PROFILE" ]]; then
   zprof
 fi
