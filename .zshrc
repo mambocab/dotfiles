@@ -44,7 +44,10 @@ export VISUAL=hx
 
 # Experimental: version management with asdf
 # One-time setup: git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
-. "$HOME/.asdf/asdf.sh"
+
+if [[ -n "$IN_NIX_SHELL" ]]; then
+  . "$HOME/.asdf/asdf.sh"
+fi
 # Add completions to path. Has to happen before compinit.
 fpath=(${ASDF_DIR}/completions $fpath)
 # One-time setup for the asdf-direnv plugin, per https://github.com/asdf-community/asdf-direnv:
