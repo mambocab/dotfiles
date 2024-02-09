@@ -44,11 +44,20 @@
 	checkoutr = checkout
 [mergetool]
 	keepBackup = true
+[rebase]
+    # Automatically mark `fixup:` / `amend:` / `squash:` commits as `fixup` so they'll be auto
+    # squashed into their respective commit. (comment via @bew)
+    autoSquash = true
+    # Print a warning when deleting commit lines in interactive rebase. Use an explicit 'drop' action to avoid the warning.
+    # (comment via @bew)
+    missingCommitsCheck = "warn"
 [color]
 	diff = auto
 	status = auto
 	branch = auto
+  	interactive = auto
 	ui = true
+  	pager = true
 [difftool]
 	prompt = false
 [push]
@@ -66,9 +75,15 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[rerere]
+	enabled = true
 [interactive]
     diffFilter = delta --color-only
 [delta]
     # Use n and N to move between diff sections
     navigate = true
-    light = true
+	light = true
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
