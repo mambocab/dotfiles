@@ -4,6 +4,8 @@
 	#	name = <name for context>
 	#	email = <email for context>
 	path = ~/.gitconfig_local
+[core]
+	pager = delta
 [alias]
 	st = status
 	c = commit -v
@@ -64,3 +66,9 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    # Use n and N to move between diff sections
+    navigate = true
+    light = true

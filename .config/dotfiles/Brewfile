@@ -8,6 +8,8 @@ brew "starship"
 brew "fd"
 brew "fzf"
 cask "wezterm"
+brew "git"
+brew "git-delta"
 
 # Python.
 brew "ruff"
