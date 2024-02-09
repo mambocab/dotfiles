@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
+target_branch=$1
+
+if [ "$target_branch" == "" ] ; then
+  >&2 echo Please provide a branch name.
+  exit 1
+fi
+
+git checkout $target_branch
+
+merged_to_target="`git branch --merged=$target_branch | -v '* '$target_branch`"
+if [ "$merged_to_target" == "" ] ; then
+  >&2 echo No branches merged to $target_branch.
+  exit 2
+fi
+
+git branch -d $merged_to_target

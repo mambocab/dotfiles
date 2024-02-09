@@ -11,8 +11,8 @@ if [ ! -f $HOME/.gitconfig_local ]; then
   >&2 echo "Configure your git user settings in $HOME/.gitconfig_local -- see ~/.gitconfig for template."
 fi
 
-# Homebrew.
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:/usr/bin"
+# Homebrew and other binaries.
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.config/dotfiles/bin:$PATH:/usr/bin"
 export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 
 # Load direnv.
