@@ -1,2 +1,4 @@
-- Move git identity configuration out of .gitconfig and into env vars in .localrc.
 - Fix homebrew-tapping for the fonts cask. (This might actually be solved in git configuration. The problem I ran into is if I just used `tap homebrew/fonts` or whatever, it tried to pull over HTTPS.)
+- Fix nix shell detection and don't load asdf if you're in one.
+
+- Move git identity configuration out of .gitconfig and into env vars in .localrc. @done
