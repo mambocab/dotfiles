@@ -1,0 +1,44 @@
+[buildPlans.IosevkaMambocab]
+family = "Iosevka Mambocab"
+spacing = "term"
+serifs = "sans"
+noCvSs = false
+exportGlyphNames = false
+
+  [buildPlans.IosevkaMambocab.ligations]
+  inherits = "dlig"
+
+[buildPlans.IosevkaMambocab.widths.Condensed]
+shape = 500
+menu = 3
+css = "condensed"
+
+[buildPlans.IosevkaMambocab.widths.Normal]
+shape = 600
+menu = 5
+css = "normal"
+
+[buildPlans.IosevkaMambocab.widths.UltraCondensed]
+shape = 416
+menu = 1
+css = "ultra-condensed"
+
+[buildPlans.IosevkaMambocab.widths.ExtraCondensed]
+shape = 456
+menu = 2
+css = "extra-condensed"
+
+[buildPlans.IosevkaMambocab.widths.SemiCondensed]
+shape = 548
+menu = 4
+css = "semi-condensed"
+
+[buildPlans.IosevkaMambocab.widths.SemiExtended]
+shape = 658
+menu = 6
+css = "semi-expanded"
+
+[buildPlans.IosevkaMambocab.widths.Extended]
+shape = 720
+menu = 7
+css = "expanded"
