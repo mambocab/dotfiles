@@ -50,7 +50,27 @@ config.allow_square_glyphs_to_overflow_width = "Always"
 -- Color schemes, including some nice ones I'm not using today. Uncomment to use.
 --
 -- Dark.
+-- config.color_scheme = 'Afterglow'
 -- config.color_scheme = "Apathy (base16)"
+-- config.color_scheme = 'arcoiris'
+-- config.color_scheme = 'Argonaut'
+-- config.color_scheme = 'Arthur'
+-- config.color_scheme = 'Ashes (dark) (terminal.sexy)'
+-- config.color_scheme = 'Atelier Cave (base16)'
+-- config.color_scheme = 'Atelier Dune (base16)'
+-- config.color_scheme = 'Atelier Sulphurpool (base16)'
+-- config.color_scheme = 'Ayu Mirage'
+-- config.color_scheme = 'Bamboo Multiplex'
+-- config.color_scheme = 'Banana Blueberry'
+-- config.color_scheme = 'Black Metal (base16)'
+-- config.color_scheme = 'Black Metal (Bathory) (base16)'
+-- config.color_scheme = 'Black Metal (Gorgoroth) (base16)'
+-- config.color_scheme = 'Black Metal (Khold) (base16)'
+-- config.color_scheme = 'BlulocoDark'
+-- config.color_scheme = 'Black Metal (Mayhem) (base16)'
+-- config.color_scheme = 'Black Metal (Nile) (base16)'
+-- config.color_scheme = 'Black Metal (Venom) (base16)'
+-- config.color_scheme = 'Azu (Gogh)'
 -- config.color_scheme = "terafox"
 -- config.color_scheme = 'Brush Trees Dark (base16)'
 -- config.color_scheme = 'wilmersdorf'

@@ -82,7 +82,7 @@
 [delta]
 	# Use n and N to move between diff sections
 	navigate = true
-	light = true
+	light = false
 [merge]
 	conflictstyle = diff3
 [diff]
