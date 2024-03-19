@@ -15,6 +15,9 @@ fi
 export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.config/dotfiles/bin:$PATH:/usr/bin"
 export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 
+# NPMX. See the npmx script for more details.
+export PATH="$PATH:$HOME/.npmx/bin"
+
 # Load direnv.
 eval "$(direnv hook zsh)"
 
