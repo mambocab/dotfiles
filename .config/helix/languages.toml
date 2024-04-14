@@ -20,4 +20,13 @@ plugins.pyls_black.live_mode = true
 plugins.pyls_ruff.enabled = true
 plugins.pyls_ruff.formatEnabled = true
 
+[[language]]
+name = "rust"
+language-servers = ["rust-analyzer" ]
+formatter = { command = "rustfmt" }
+auto-format = true
+indent = { tab-width = 4, unit = "t" }
+
+[language-server.rust-analyzer]
+command = "rust-analyzer"
 
