@@ -1,17 +1,23 @@
 [[language]]
 name = "python"
-language-servers = [ "pyright", "ruff" ]
+language-servers = [ "pylsp" ]
 auto-format = true
 
-[language-server.pyright.config.python.analysis]
-typeCheckingMode = "basic"
+[language-server.pylsp.config.pylsp]
+pyls_flake8.enabled = false
+pyls_autopep8.enabled = false
+pyls_mccabe.enabled = false
+pyls_pycodestyle.enabled = false
+pyls_pyflakes.enabled = false
+pyls_pylint.enabled = false
+pyls_yapf.enabled = false
 
-[language-server.ruff]
-command = "ruff-lsp"
+plugins.pyls_rope.enabled = true
+plugins.pyls_mypy.enabled = true
+plugins.pyls_mypy.live_mode = true
+plugins.pyls_black.enabled = true
+plugins.pyls_black.live_mode = true
+plugins.pyls_ruff.enabled = true
+plugins.pyls_ruff.formatEnabled = true
 
-[language-server.ruff.config.settings]
-args = ["--ignore", "E501"]
 
-[language.formatter]
-command = "black"
-args = ["-"]
