@@ -13,6 +13,7 @@
 	ap = add -p
 	co = checkout
 	cob = checkout -b
+	fixup = commit -v --fixup
 	amend = commit -v --amend
 
 	b = branch
