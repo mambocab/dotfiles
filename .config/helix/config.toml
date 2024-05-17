@@ -3,3 +3,5 @@ theme = "base16_transparent"
 [editor.soft-wrap]
 enable = true
 
+[keys.normal]
+space.o = "file_picker_in_current_buffer_directory"
