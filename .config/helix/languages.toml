@@ -4,21 +4,21 @@ language-servers = [ "pylsp" ]
 auto-format = true
 
 [language-server.pylsp.config.pylsp]
-pyls_flake8.enabled = false
-pyls_autopep8.enabled = false
-pyls_mccabe.enabled = false
-pyls_pycodestyle.enabled = false
-pyls_pyflakes.enabled = false
-pyls_pylint.enabled = false
-pyls_yapf.enabled = false
+pylsp_flake8.enabled = false
+pylsp_autopep8.enabled = false
+pylsp_mccabe.enabled = false
+pylsp_pycodestyle.enabled = false
+pylsp_pyflakes.enabled = false
+pylsp_pylint.enabled = false
+pylsp_yapf.enabled = false
 
-plugins.pyls_rope.enabled = true
-plugins.pyls_mypy.enabled = true
-plugins.pyls_mypy.live_mode = true
-plugins.pyls_black.enabled = true
-plugins.pyls_black.live_mode = true
-plugins.pyls_ruff.enabled = true
-plugins.pyls_ruff.formatEnabled = true
+plugins.pylsp_rope.enabled = true
+plugins.pylsp_mypy.enabled = true
+plugins.pylsp_mypy.live_mode = true
+plugins.pylsp_black.enabled = true
+plugins.pylsp_black.live_mode = true
+plugins.pylsp_ruff.enabled = true
+plugins.pylsp_ruff.formatEnabled = true
 
 [[language]]
 name = "rust"
