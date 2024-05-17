@@ -40,8 +40,8 @@ bindkey "^[[3~"  delete-char
 bindkey "^[3;5~" delete-char
 
 # Editor defaults.
-export EDITOR=hx
-export VISUAL=hx
+export EDITOR=nvim
+export VISUAL=nvim
 
 # Experimental: version management with asdf
 # One-time setup: git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
