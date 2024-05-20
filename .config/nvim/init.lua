@@ -128,6 +128,11 @@ require("lazy").setup({
 	},
 	{
 		'eandrju/cellular-automaton.nvim' -- Just for fun.
+	},
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" }
 	}
 })
 
@@ -147,3 +152,5 @@ vim.keymap.set('n', '<leader>b', telescope_builtin.buffers, {})
 vim.keymap.set('n', '<leader>h', telescope_builtin.help_tags, {})
 
 vim.keymap.set('n', 'gc', 'commentary')
+
+vim.api.nvim_set_option('smartcase', true)
