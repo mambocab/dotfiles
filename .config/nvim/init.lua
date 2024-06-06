@@ -133,7 +133,10 @@ require("lazy").setup({
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
 		dependencies = { "nvim-lua/plenary.nvim" }
-	}
+	},
+	{
+		'tpope/vim-surround'
+	},
 })
 
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
