@@ -42,6 +42,7 @@ bindkey "^[3;5~" delete-char
 # Editor defaults.
 export EDITOR=nvim
 export VISUAL=nvim
+alias e=$EDITOR
 
 # Experimental: version management with asdf
 # One-time setup: git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
