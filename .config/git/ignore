@@ -70,3 +70,5 @@ results.txt
 pyrightconfig.json
 
 java-db
+
+.tool-versions
