@@ -188,8 +188,6 @@ vim.keymap.set('n', '<leader>b', ':buffer<CR>')
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>s', ':split<CR>')
 vim.keymap.set('n', '<leader>v', ':vsplit<CR>')
-vim.keymap.set('n', '<leader>r', '<cmd>lua vim.lsp.buf.format()<CR>')
-vim.keymap.set('v', '<leader>r', '<cmd>lua vim.lsp.buf.format()<CR>')
 
 local telescope_builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>f', telescope_builtin.find_files, {})
@@ -214,6 +212,16 @@ vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
 vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+-- LSP-enabled bindings:
+-- * format. (derived from alt-shift-l for formatting in VS Code.)
+vim.keymap.set("n", "<leader>l", "<cmd>lua vim.lsp.buf.format()<CR>")
+vim.keymap.set("v", "<leader>l", "<cmd>lua vim.lsp.buf.format()<CR>")
+-- * go to diagnostics.
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+-- * rename symbol.
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 
 -- Display relative numbers in left gutter.
 vim.opt.relativenumber = true
