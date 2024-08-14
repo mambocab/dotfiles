@@ -225,3 +225,16 @@ vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 
 -- Display relative numbers in left gutter.
 vim.opt.relativenumber = true
+
+-- Set style for bash.
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = { "*.bash", "*.sh", "*.bats" },
+	callback = function()
+		vim.opt.shiftwidth = 2
+		vim.opt.smarttab = true
+		vim.opt.expandtab = true
+		-- Avoid tabs that look like spaces.
+		vim.opt.tabstop = 8
+		vim.opt.softtabstop = 0
+	end
+})
