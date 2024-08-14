@@ -138,6 +138,9 @@ require("lazy").setup({
 		'tpope/vim-surround'
 	},
 	{
+		'metakirby5/codi.vim'
+	},
+	{
 		"folke/trouble.nvim",
 		opts = {}, -- for default options, refer to the configuration section for custom setup.
 		cmd = "Trouble",
@@ -173,6 +176,9 @@ require("lazy").setup({
 				desc = "Quickfix List (Trouble)",
 			},
 		},
+	},
+	{
+		'aliou/bats.vim'
 	}
 })
 
