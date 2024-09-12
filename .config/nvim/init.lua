@@ -112,6 +112,9 @@ require("lazy").setup({
 					prefix = "",
 				},
 			})
+
+			-- Enable regal for Rego analysis.
+			require('lspconfig').regal.setup {}
 		end
 	},
 	{
@@ -179,8 +182,25 @@ require("lazy").setup({
 	},
 	{
 		'aliou/bats.vim'
-	}
+	},
 })
+
+-- Ruff LSP setup.
+require('lspconfig').pyright.setup {
+	settings = {
+		pyright = {
+			-- Using Ruff's import organizer
+			disableOrganizeImports = true,
+		},
+		python = {
+			analysis = {
+				-- Ignore all files for analysis to exclusively use Ruff for linting
+				ignore = { '*' },
+			},
+		},
+	},
+}
+
 
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', '<leader>e', ':edit<CR>')
