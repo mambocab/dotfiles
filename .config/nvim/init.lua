@@ -22,7 +22,11 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim"
 		},
 	},
+	{
+		"williamboman/mason.nvim",
+		dependencies = { 'mason-org/mason-registry' },
 
+	},
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -36,6 +40,8 @@ require("lazy").setup({
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
 			"j-hui/fidget.nvim",
+			-- Adds parameter completion.
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 		},
 
 		config = function()
@@ -48,23 +54,20 @@ require("lazy").setup({
 				cmp_lsp.default_capabilities())
 
 			require("fidget").setup({})
-			require("mason").setup()
+			require("mason").setup({})
 			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"rust_analyzer",
-					"gopls",
-				},
+				-- Lazy and Mason are killin' me.
+				-- After install, run :PylspInstall to install the needed plugins.
+				ensure_installed = { "lua_ls", "rust_analyzer", "gopls", "pylsp", "regal" },
 				handlers = {
 					function(server_name) -- default handler (optional)
-						require("lspconfig")[server_name].setup {
+						vim.lsp.config(server_name, {
 							capabilities = capabilities
-						}
+						})
 					end,
 
 					["lua_ls"] = function()
-						local lspconfig = require("lspconfig")
-						lspconfig.lua_ls.setup {
+						vim.lsp.config("lua_ls", {
 							capabilities = capabilities,
 							settings = {
 								Lua = {
@@ -74,7 +77,7 @@ require("lazy").setup({
 									}
 								}
 							}
-						}
+						})
 					end,
 				}
 			})
@@ -95,6 +98,8 @@ require("lazy").setup({
 				}),
 				sources = cmp.config.sources({
 					{ name = 'nvim_lsp' },
+					-- Adds autocomplete/suggestions for signature.
+					{ name = 'nvim_lsp_signature_help' },
 					{ name = 'luasnip' }, -- For luasnip users.
 				}, {
 					{ name = 'buffer' },
@@ -113,13 +118,12 @@ require("lazy").setup({
 				},
 			})
 
-			-- Enable regal for Rego analysis.
-			require('lspconfig').regal.setup {}
+			-- Enable various LSPs.
+			vim.lsp.config('regal', {})
+			vim.lsp.config('yamlls', {})
 		end
 	},
-	{
-		'tpope/vim-commentary'
-	},
+	{ 'tpope/vim-commentary' },
 	{
 		'nvim-telescope/telescope.nvim',
 		requires = { { 'nvim-lua/plenary.nvim' } }
@@ -129,20 +133,15 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter-context",
 		requires = { { "nvim-treesitter/nvim-treesitter" } }
 	},
-	{
-		'eandrju/cellular-automaton.nvim' -- Just for fun.
-	},
+	{ 'eandrju/cellular-automaton.nvim' }, -- Just for fun.
 	{
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
 		dependencies = { "nvim-lua/plenary.nvim" }
 	},
-	{
-		'tpope/vim-surround'
-	},
-	{
-		'metakirby5/codi.vim'
-	},
+	{ 'tpope/vim-surround' },
+	{ 'tpope/vim-repeat' },
+	{ 'metakirby5/codi.vim' },
 	{
 		"folke/trouble.nvim",
 		opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -183,24 +182,41 @@ require("lazy").setup({
 	{
 		'aliou/bats.vim'
 	},
+	{ 'github/copilot.vim' },
 })
 
--- Ruff LSP setup.
-require('lspconfig').pyright.setup {
+
+vim.lsp.config('pyright', {
 	settings = {
 		pyright = {
 			-- Using Ruff's import organizer
 			disableOrganizeImports = true,
 		},
 		python = {
-			analysis = {
-				-- Ignore all files for analysis to exclusively use Ruff for linting
-				ignore = { '*' },
+			anaysis = {
+				autoSearchPaths = true,
+				useLibraryCodeForTypes = true,
+			}
+		}
+	},
+})
+vim.lsp.config('pylsp', {
+	settings = {
+		pylsp = {
+			plugins = {
+				-- Use ruff for formatting...
+				ruff = {
+					enabled = true,
+					formatEnabled = true,
+				},
+				-- ... and ignore these guys.
+				pycodestyle = { enabled = false },
+				autopep8 = { enabled = false },
+				yapf = { enabled = false },
 			},
 		},
-	},
-}
-
+	}
+})
 
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', '<leader>e', ':edit<CR>')
@@ -214,6 +230,7 @@ vim.keymap.set('n', '<leader>f', telescope_builtin.find_files, {})
 vim.keymap.set('n', '<leader>g', telescope_builtin.live_grep, {})
 vim.keymap.set('n', '<leader>b', telescope_builtin.buffers, {})
 vim.keymap.set('n', '<leader>h', telescope_builtin.help_tags, {})
+vim.keymap.set('n', "<C-'>", telescope_builtin.lsp_references, {})
 
 vim.keymap.set('n', 'gc', 'commentary')
 
