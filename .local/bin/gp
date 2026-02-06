@@ -4,7 +4,34 @@
 
 case "$1" in
   # w: view current PR in web browser
-  w) gh pr view -w ;;
+  w) shift; gh pr view -w "$@" ;;
+  
+  # t: view current PR in terminal
+  t) shift; gh pr view "$@" ;;
+  
+  # k: show CI checks for current PR
+  k) shift; gh pr checks "$@" ;;
+  
+  # kw: watch CI checks and run command when done
+  kw) 
+    shift
+    cmd=""
+    args=""
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        -c|--command) cmd="$2"; shift 2 ;;
+        *) args="$args $1"; shift ;;
+      esac
+    done
+    if [ -z "$cmd" ]; then
+      repo=$(gh repo view --json name -q .name)
+      pr=$(gh pr view --json number -q .number)
+      cmd="say $repo $pr done"
+    fi
+    gh pr checks --watch $args && eval "$cmd" ;;
+  
+  # d: view diff of current PR
+  d) shift; gh pr diff "$@" ;;
   
   # s: select and checkout a PR using fzf
   # Lists PRs with author, number, and title.
@@ -19,11 +46,23 @@ case "$1" in
      xargs gh pr checkout ;;
   
   # c: create a new PR
-  c) gh pr create ;;
+  c) shift; gh pr create "$@" ;;
   
   # show usage for invalid options
-  *) echo "Usage: gp {w|s|c}
-  w - view current PR in web browser
-  s - select and checkout a PR using fzf
-  c - create a new PR" >&2; exit 1 ;;
+  *) echo "Usage: gp {w|t|k|kw|d|s|c} [flags]
+  w  - view current PR in web browser
+       flags: --comments, --json, --jq, --template, --web
+  t  - view current PR in terminal
+       flags: --comments, --json, --jq, --template, --web
+  k  - show CI checks for current PR
+       flags: --fail-fast, --interval, --json, --jq, --required, --template, --watch, --web
+  kw - watch CI checks and run command when done
+       flags: -c/--command (custom command), --fail-fast, --interval
+  d  - view diff of current PR
+       flags: --color, --name-only, --patch, --web
+  s  - select and checkout a PR using fzf (no flags)
+  c  - create a new PR
+       flags: --base, --draft, --dry-run, --label, --recover, --reviewer, --title, --web
+  
+  All commands accept PR selectors: [<number> | <url> | <branch>]" >&2; exit 1 ;;
 esac
