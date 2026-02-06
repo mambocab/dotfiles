@@ -1,0 +1,29 @@
+#!/bin/sh
+# GitHub PR helper script
+# Provides shortcuts for common GitHub PR operations
+
+case "$1" in
+  # w: view current PR in web browser
+  w) gh pr view -w ;;
+  
+  # s: select and checkout a PR using fzf
+  # Lists PRs with author, number, and title.
+  # Uses `column` to lay them out in a table for easier reading in the `fzf` window.
+  # Truncates app/* usernames to app/abcdefg… for readability
+  s) gh pr list --limit 500 --json number,title,author --template '{{range .}}{{.author.login}}{{"\t"}}#{{.number}}{{"\t"}}{{.title}}{{"\n"}}{{end}}' | \
+     awk -F'\t' '{if ($1 ~ /^app\//) {sub(/^app\//, "app/", $1); $1 = "app/" substr($1, 5, 7) "…"} print}' OFS='\t' | \
+     column -t -s $'\t' | \
+     fzf | \
+     awk '{print $2}' | \
+     tr -d '#' | \
+     xargs gh pr checkout ;;
+  
+  # c: create a new PR
+  c) gh pr create ;;
+  
+  # show usage for invalid options
+  *) echo "Usage: gp {w|s|c}
+  w - view current PR in web browser
+  s - select and checkout a PR using fzf
+  c - create a new PR" >&2; exit 1 ;;
+esac
