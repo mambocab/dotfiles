@@ -48,8 +48,62 @@ case "$1" in
   # c: create a new PR
   c) shift; gh pr create "$@" ;;
   
+  # verify: check that documented flags match actual gh pr commands
+  verify)
+    echo "Verifying documented flags are complete..."
+    errors=0
+    
+    # w and t: gh pr view
+    expected="--comments --json --jq --template --web"
+    actual=$(gh pr view --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
+    for flag in $expected; do
+      case "$actual" in
+        *"$flag"*) ;;
+        *) echo "❌ w/t missing: $flag"; errors=$((errors + 1)) ;;
+      esac
+    done
+    
+    # k: gh pr checks
+    expected="--fail-fast --interval --json --jq --required --template --watch --web"
+    actual=$(gh pr checks --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
+    for flag in $expected; do
+      case "$actual" in
+        *"$flag"*) ;;
+        *) echo "❌ k missing: $flag"; errors=$((errors + 1)) ;;
+      esac
+    done
+    
+    # d: gh pr diff
+    expected="--color --name-only --patch --web"
+    actual=$(gh pr diff --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
+    for flag in $expected; do
+      case "$actual" in
+        *"$flag"*) ;;
+        *) echo "❌ d missing: $flag"; errors=$((errors + 1)) ;;
+      esac
+    done
+    
+    # c: gh pr create (subset)
+    expected="--base --draft --dry-run --label --recover --reviewer --title --web"
+    actual=$(gh pr create --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
+    for flag in $expected; do
+      case "$actual" in
+        *"$flag"*) ;;
+        *) echo "❌ c missing: $flag"; errors=$((errors + 1)) ;;
+      esac
+    done
+    
+    if [ $errors -eq 0 ]; then
+      echo "✅ All documented flags verified"
+    else
+      echo ""
+      echo "Found $errors missing flag(s)"
+      exit 1
+    fi
+    ;;
+  
   # show usage for invalid options
-  *) echo "Usage: gp {w|t|k|kw|d|s|c} [flags]
+  *) echo "Usage: gp {w|t|k|kw|d|s|c|verify} [flags]
   w  - view current PR in web browser
        flags: --comments, --json, --jq, --template, --web
   t  - view current PR in terminal
@@ -63,6 +117,7 @@ case "$1" in
   s  - select and checkout a PR using fzf (no flags)
   c  - create a new PR
        flags: --base, --draft, --dry-run, --label, --recover, --reviewer, --title, --web
+  verify - verify documented flags match actual gh pr commands
   
   All commands accept PR selectors: [<number> | <url> | <branch>]" >&2; exit 1 ;;
 esac
