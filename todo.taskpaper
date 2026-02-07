@@ -2,3 +2,23 @@
 - Fix nix shell detection and don't load asdf if you're in one.
 
 - Move git identity configuration out of .gitconfig and into env vars in .localrc. @done
+
+Low-hanging fruit:
+	- Implement `checkout-remote` git alias (see TODO in git config, SO link there).
+	- Add guardrails for gh `co` alias when diffs exceed 100 files (see TODO in gh config).
+
+Missing packages:
+	- Add a `claude` package for ~/CLAUDE.md and Claude Code settings.
+	- Add an `fzf` package — .zshrc references it but there's no stowed config.
+	- Add an `ssh` package.
+	- Look for other binaries and stuff used in .zshrc and similar.
+
+Repo improvements:
+	- Add per-package Brewfiles so `just install <pkg>` is self-contained (atuin, starship, fzf, fd, ripgrep, git-delta, helix, etc.).
+	- Add a GitHub Actions CI workflow (e.g. `stow --simulate` check).
+	- Add a light bootstrap script/just target for initial setup.
+
+Config enhancements:
+	- Update nvim lazy.nvim lockfile.
+	- Sync starship colors with wezterm hardhacker theme.
+	- Add per-package boostrapping, like "on install, build a binary".
