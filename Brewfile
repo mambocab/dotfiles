@@ -1,28 +1,3 @@
-# brew bundle install
-
-# Terminal.
-brew "autojump"
-brew "direnv"
-brew "helix"
+# Bootstrap dependencies for this dotfiles repo.
 brew "just"
-brew "starship"
 brew "stow"
-brew "fd"
-brew "fzf"
-cask "wezterm"
-brew "git"
-brew "git-delta"
-
-# Python.
-brew "ruff"
-
-# Fonts.
-tap "homebrew/cask-fonts"
-cask "font-ia-writer-duo"
-cask "font-ia-writer-mono"
-cask "font-ia-writer-quattro"
-cask "font-monaspace"
-
-# Apps.
-cask "firefox"
-cask "1password"
