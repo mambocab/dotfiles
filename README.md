@@ -1,16 +1,49 @@
 # dotfiles
 
-My dotfiles.
+My dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-## Theory of Operation
+## Setup
 
-This manages dotfiles via the bare-git-repo method. In this method, you simply let your dotfiles live where they're used, in `~`, and version them in a separate, bare, git repository. See `.zshrc` for setup. Credit to @teamsnelgrove for [pointing me to this method][snelgrove] and to HN user StreakyCobra for [sharing the method to begin with][streakycobra].
+```bash
+brew bundle
+git clone git@github.com:mambocab/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+just install
+```
+
+Or install individual packages:
+
+```bash
+stow nvim
+stow shell
+```
+
+To unlink everything:
+
+```bash
+just uninstall
+```
 
 ## Guiding Principles
 
 0. Prefer simpler stuff.
 1. Prefer comment-delimited sections over more files. e.g., if you have aliases for interactive sessions, don't break them into `aliases.zsh` and then `source aliases.zsh` from `.zshrc`. Just put them in the `# Functions.` section of your `.zshrc`.
-2. Embrace minor inconvenience. `./.config/dotfiles/Brewfile` doesn't mean you'll never need to `brew install` manually when you have to. Put another way: this is not a Terraform template for unattended provisioning of new boxes. This is a folder full of configuration files.
+2. Embrace minor inconvenience. `Brewfile` doesn't mean you'll never need to `brew install` manually when you have to. Put another way: this is not a Terraform template for unattended provisioning of new boxes. This is a folder full of configuration files.
 
-[snelgrove]: https://github.com/teamsnelgrove/dotfiles/tree/2bbfa8d689248874d1265036c8ee2efec7489389#bare-your-sole
-[streakycobra]: https://news.ycombinator.com/item?id=11071754
+## Packages
+
+| Package | Contents |
+|---------|----------|
+| `shell` | `.zshrc`, `.zprofile` |
+| `git` | `.config/git/config`, `.config/git/ignore` |
+| `nvim` | `.config/nvim/init.lua`, lazy-lock |
+| `helix` | `.config/helix/config.toml`, languages |
+| `wezterm` | `.config/wezterm/wezterm.lua`, colors |
+| `starship` | `.config/starship.toml` |
+| `atuin` | `.config/atuin/config.toml` |
+| `direnv` | `.config/direnv/direnvrc` |
+| `gh` | `.config/gh/config.yml` |
+| `pip` | `.config/pip/pip.conf` |
+| `ripgrep` | `.config/ripgreprc` |
+| `scripts` | `.local/bin/gp`, `git-delete-merged-to`, `npmx` |
+| `fonts` | `.fonts/iosevka/` build config |
