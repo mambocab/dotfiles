@@ -12,7 +12,7 @@ if [ ! -f $HOME/.gitconfig_local ]; then
 fi
 
 # Homebrew and other binaries.
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.config/dotfiles/bin:$PATH:/usr/bin"
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:/usr/bin"
 export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 
 # NPMX. See the npmx script for more details.
@@ -132,16 +132,7 @@ export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 # Paged and pretty (colors, headers, and line numbers).
 function rgp { rg -p $"@" | less -RFX }
 
-# Dotfiles management.
-#
-# One-time setup:
-#   git clone --bare git@github.com:mambocab/dotfiles.git ~/.dotfiles
-#   dotfiles config --local status.showUntrackedFiles no
-# i.e. ~ becomes a worktree managed by git, with the repository itself managed in ~/.dotfiles. And we can run `git status`
-# without git complaining that everything in your home dir isn't tracked.
-#
-# Use `dotfiles` like `git` but scoped to our specific setup.
-alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+# Dotfiles management: see ~/dotfiles/README.md
 
 # General-purpose aliases.
 #
