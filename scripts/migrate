@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Migrate existing dotfiles to stow-managed symlinks.
+#
+# For each file in the stow packages, if a real (non-symlink) file exists at
+# the target location, back it up before running stow. This lets you move from
+# a bare-repo or manual dotfiles setup to stow without losing anything.
+#
+# Usage: scripts/migrate [--dry-run]
+#   Run from the dotfiles repo root (~/dotfiles).
+
+DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+PACKAGES_DIR="$DOTFILES_DIR/packages"
+TARGET="$HOME"
+BACKUP_DIR="$HOME/.dotfiles-backup/$(date +%F_%H-%M-%S)"
+DRY_RUN=false
+
+if [[ "${1:-}" == "--dry-run" ]]; then
+    DRY_RUN=true
+fi
+
+backed_up=0
+skipped=0
+
+for pkg_dir in "$PACKAGES_DIR"/*/; do
+    pkg="$(basename "$pkg_dir")"
+
+    # Find all files in this package (not directories).
+    while IFS= read -r -d '' file; do
+        # Path relative to the package dir — this is where stow will symlink.
+        rel="${file#"$pkg_dir"}"
+        target="$TARGET/$rel"
+
+        if [[ -e "$target" && ! -L "$target" ]]; then
+            backup_path="$BACKUP_DIR/$pkg/$rel"
+            if $DRY_RUN; then
+                echo "[dry-run] would back up: $target -> $backup_path"
+            else
+                mkdir -p "$(dirname "$backup_path")"
+                cp -a "$target" "$backup_path"
+                rm "$target"
+                echo "backed up: $target -> $backup_path"
+            fi
+            backed_up=$((backed_up + 1))
+        elif [[ -L "$target" ]]; then
+            skipped=$((skipped + 1))
+        fi
+    done < <(find "$pkg_dir" -type f -print0)
+done
+
+echo ""
+echo "backed up $backed_up file(s), skipped $skipped symlink(s)"
+
+if $DRY_RUN; then
+    echo "(dry run — no files were changed)"
+else
+    echo "backups in: $BACKUP_DIR"
+    echo ""
+    echo "running stow..."
+    cd "$DOTFILES_DIR"
+    for pkg_dir in "$PACKAGES_DIR"/*/; do
+        pkg="$(basename "$pkg_dir")"
+        stow -d packages -t ~ "$pkg"
+        echo "  stowed: $pkg"
+    done
+    echo "done."
+fi
