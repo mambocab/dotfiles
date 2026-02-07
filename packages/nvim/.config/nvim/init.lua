@@ -183,6 +183,7 @@ require("lazy").setup({
 		'aliou/bats.vim'
 	},
 	{ 'github/copilot.vim' },
+	{ 'lark-parser/vim-lark-syntax' },
 })
 
 
