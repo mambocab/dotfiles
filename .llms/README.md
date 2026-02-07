@@ -35,4 +35,5 @@ Packages with a `packages/<name>.Brewfile` get `brew bundle` run first. Packages
 
 ## Reference
 
+- [house-style.md](house-style.md) — Code, documentation, and git conventions
 - [stow.md](stow.md) — GNU Stow reference (terminology, options, tree folding, ignore lists, conflicts)
