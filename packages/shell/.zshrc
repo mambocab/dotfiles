@@ -307,3 +307,5 @@ alias localconf='git --git-dir=$HOME/.localconf.git --work-tree=$HOME'
 if [[ -n "$ZSHRC_PROFILE" ]]; then
   zprof
 fi
+
+unsetopt BG_NICE
