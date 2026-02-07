@@ -8,20 +8,41 @@ My dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 brew bundle
 git clone git@github.com:mambocab/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+scripts/migrate        # backs up existing files, then stows everything
+```
+
+Or, if starting fresh (no existing dotfiles to preserve):
+
+```bash
 just install
 ```
 
-Or install individual packages:
+Install individual packages:
 
 ```bash
-stow nvim
-stow shell
+stow -d packages -t ~ nvim
 ```
 
-To unlink everything:
+Unlink everything:
 
 ```bash
 just uninstall
+```
+
+## Layout
+
+```
+~/dotfiles/
+├── packages/           # stow packages — each mirrors ~/
+│   ├── shell/
+│   ├── git/
+│   ├── nvim/
+│   ├── ...
+├── scripts/            # repo utilities (not stowed)
+│   └── migrate         # safe migration from non-stow setups
+├── Brewfile
+├── justfile
+└── README.md
 ```
 
 ## Guiding Principles
