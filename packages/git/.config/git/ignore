@@ -72,3 +72,5 @@ pyrightconfig.json
 java-db
 
 .tool-versions
+
+**/.claude/settings.local.json
