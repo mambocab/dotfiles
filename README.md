@@ -20,7 +20,7 @@ just install
 Install individual packages:
 
 ```bash
-stow -d packages -t ~ nvim
+just install nvim
 ```
 
 Unlink everything:
