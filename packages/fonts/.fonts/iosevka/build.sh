@@ -1,5 +1,5 @@
-#! /usr/bin/env sh
-set -eo pipefail
+#!/usr/bin/env bash
+set -euo pipefail
 
 hash ttfautohint || brew install ttfautohint
 
