@@ -25,7 +25,7 @@ case "$1" in
     done
     if [ -z "$cmd" ]; then
       repo=$(gh repo view --json name -q .name)
-      pr=$(gh pr view --json number -q .number)
+      pr=$(gh pr view --json number -q .number) || exit 1
       cmd="say $repo $pr done"
     fi
     gh pr checks --watch $args && eval "$cmd" ;;
