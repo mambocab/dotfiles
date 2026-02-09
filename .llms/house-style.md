@@ -171,9 +171,11 @@ echo "example"
 
 **Examples:**
 ```
-Update nvim lockfile.
+Update nvim lockfile
+```
 
-Add support for nvim 0.9 LSP improvements.
+```
+Add support for nvim 0.9 LSP improvements
 ```
 
 ```
