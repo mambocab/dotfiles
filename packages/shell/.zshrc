@@ -133,9 +133,8 @@ export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
 # Haskell.
 [ -f $HOME/.ghcup/env ] && source $HOME/.ghcup/env
-# Rust
+# Rust.
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
-
 
 # VS Code.
 # ^a, ^e, and ^r should work in the VS Code terminal. The VS Code terminal will silently change editing mode based on

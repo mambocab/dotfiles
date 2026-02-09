@@ -6,7 +6,7 @@ local config = {}
 if wezterm.config_builder then config = wezterm.config_builder() end
 
 -- Keybindings.
-editor = "/opt/homebrew/bin/hx"
+local editor = "/opt/homebrew/bin/hx"
 config.keys = {
   {
     mods = "CMD",
