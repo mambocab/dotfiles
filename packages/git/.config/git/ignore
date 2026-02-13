@@ -63,6 +63,9 @@ results.txt
 .idea/
 .vscode/
 
+# direnv stuff
+.direnv/
+
 /guardrails/
 
 .envrc_local
