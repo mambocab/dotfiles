@@ -57,12 +57,8 @@ if $DRY_RUN; then
 else
     echo "backups in: $BACKUP_DIR"
     echo ""
-    echo "running stow..."
+    echo "running install..."
     cd "$DOTFILES_DIR"
-    for pkg_dir in "$PACKAGES_DIR"/*/; do
-        pkg="$(basename "$pkg_dir")"
-        stow -d packages -t ~ "$pkg"
-        echo "  stowed: $pkg"
-    done
+    just install
     echo "done."
 fi
