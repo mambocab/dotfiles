@@ -37,6 +37,15 @@ STARSHIP_SKIP_TERMS="$STARSHIP_SKIP_TERMS:vscode"
 [[ ! ":$STARSHIP_SKIP_TERMS:" =~ ":$TERM_PROGRAM:" ]] && \
         type starship > /dev/null && eval "$(starship init zsh)"
 
+# Opens the current shell with a minimal starship config set -- the prompt in there should be '$ '.
+# Makes it easier to copy-and-paste clean output from the terminal to comms tools like Slack and GitHub.
+alias dollar-prompt='STARSHIP_CONFIG=~/.config/dollarsign.starship.toml $SHELL'
+# In theory you can just do this by executing
+#
+#   $ export STARSHIP_CONFIG=~/.config/dollarsign.starship.toml
+#
+# in the current shell. That's kind of a pain in the butt though; this makes it a command.
+
 # zsh interaction configuration.
 # Up and down search for commands starting with the current buffer, if anything's populated in that buffer.
 bindkey '\e[A' history-beginning-search-backward
