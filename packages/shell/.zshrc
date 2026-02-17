@@ -257,7 +257,7 @@ function go-objdump() {
                         "
 }
 
-# Experimental: cool interactive history with atuin.
+# Interactive history with atuin.
 # One-time setup: brew install atuin
 type atuin > /dev/null && eval "$(atuin init zsh)"
 
@@ -270,9 +270,11 @@ path+="$DASHT_DIR/bin"
 fpath+="$DASHT_DIR/etc/zsh/completions"
 export MANPATH="$DASHT_DIR/man:$MANPATH"
 
-# Experimental: ^t for fzf file-selection.
-# Taken from https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
-FZF_CTRL_T_COMMAND='fd --type f --strip-cwd-prefix'
+# ^t for fzf file-selection.
+# Framework taken from https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+#
+# FZF_CTRL_T_COMMAND can be customized to change the file-finding command. This one is from https://github.com/sharkdp/fd?tab=readme-ov-file#using-fd-with-fzf.
+FZF_CTRL_T_COMMAND='fd --type file --follow --hidden --exclude .git'
 __fzfcmd() {
   [ -n "${TMUX_PANE-}" ] && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "${FZF_TMUX_OPTS-}" ]; } &&
     echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
