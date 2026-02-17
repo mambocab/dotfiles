@@ -2,18 +2,25 @@
 # GitHub PR helper script
 # Provides shortcuts for common GitHub PR operations
 
+# Flag definitions (single source of truth)
+FLAGS_W_T="--comments --json --jq --template --web"
+FLAGS_K="--fail-fast --interval --json --jq --required --template --watch --web"
+FLAGS_KW="--fail-fast --interval"
+FLAGS_D="--color --name-only --patch --web"
+FLAGS_C="--base --draft --dry-run --label --recover --reviewer --title --web"
+
 case "$1" in
   # w: view current PR in web browser
   w) shift; gh pr view -w "$@" ;;
-  
+
   # t: view current PR in terminal
   t) shift; gh pr view "$@" ;;
-  
+
   # k: show CI checks for current PR
   k) shift; gh pr checks "$@" ;;
-  
+
   # kw: watch CI checks and run command when done
-  kw) 
+  kw)
     shift
     cmd=""
     args=""
@@ -29,10 +36,10 @@ case "$1" in
       cmd="say $repo $pr done"
     fi
     gh pr checks --watch $args && eval "$cmd" ;;
-  
+
   # d: view diff of current PR
   d) shift; gh pr diff "$@" ;;
-  
+
   # s: select and checkout a PR using fzf
   # Lists PRs with author, number, and title.
   # Uses `column` to lay them out in a table for easier reading in the `fzf` window.
@@ -44,80 +51,128 @@ case "$1" in
      awk '{print $2}' | \
      tr -d '#' | \
      xargs gh pr checkout ;;
-  
+
   # c: create a new PR
   c) shift; gh pr create "$@" ;;
-  
+
   # verify: check that documented flags match actual gh pr commands
   verify)
+    # ANSI color codes
+    GREEN='\033[0;32m'
+    RED='\033[0;31m'
+    GRAY='\033[0;90m'
+    RESET='\033[0m'
+
+    # Helper function to colorize flags
+    colorize_flags() {
+      local expected="$1"
+      local actual="$2"
+      local ignored="$3"
+      local result=""
+
+      for flag in $actual; do
+        case "$flag" in
+          --help|--repo) continue ;;
+        esac
+
+        if [ -n "$ignored" ]; then
+          case "$ignored" in
+            *"$flag"*) result="$result${GRAY}$flag${RESET} "; continue ;;
+          esac
+        fi
+
+        case "$expected" in
+          *"$flag"*) result="$result${GREEN}$flag${RESET} " ;;
+          *) result="$result${GRAY}$flag${RESET} " ;;
+        esac
+      done
+      echo "$result"
+    }
+
     echo "Verifying documented flags are complete..."
+    echo ""
     errors=0
-    
-    # w and t: gh pr view
-    expected="--comments --json --jq --template --web"
-    actual=$(gh pr view --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
-    for flag in $expected; do
-      case "$actual" in
-        *"$flag"*) ;;
-        *) echo "❌ w/t missing: $flag"; errors=$((errors + 1)) ;;
-      esac
+
+    # Process each check
+    # Format: name|gh_command|flags_var|note|is_subset
+    echo "w/t|gh pr view|FLAGS_W_T||no
+k|gh pr checks|FLAGS_K||no
+kw|gh pr checks|FLAGS_KW|(plus -c/--command for custom callback)|yes
+s|||no
+d|gh pr diff|FLAGS_D||no
+c|gh pr create|FLAGS_C||yes" | while IFS='|' read -r name gh_cmd flags_var note is_subset; do
+
+      echo "$name ($gh_cmd):"
+
+      # Special case for s (no flags)
+      if [ -z "$flags_var" ]; then
+        echo "  No flags - custom interactive command"
+        echo ""
+        continue
+      fi
+
+      # Get expected flags
+      eval "expected=\$$flags_var"
+
+      # Get actual flags from gh help
+      actual=$($gh_cmd --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
+
+      # Calculate ignored flags if this is a subset
+      ignored=""
+      if [ "$is_subset" = "yes" ]; then
+        for flag in $actual; do
+          case "$expected" in
+            *"$flag"*) ;;
+            *) case "$flag" in
+              --help|--repo) ;;
+              *) ignored="$ignored $flag" ;;
+            esac ;;
+          esac
+        done
+      fi
+
+      # Display
+      if [ -n "$note" ]; then
+        echo "  Documented: $expected $note"
+      else
+        echo "  Documented: $expected"
+      fi
+      printf "  Available:  %b\n" "$(colorize_flags "$expected" "$actual" "$ignored")"
+
+      # Check for missing flags
+      for flag in $expected; do
+        case "$actual" in
+          *"$flag"*) ;;
+          *) echo -e "  ${RED}❌ MISSING: $flag${RESET}"; errors=$((errors + 1)) ;;
+        esac
+      done
+      echo ""
     done
-    
-    # k: gh pr checks
-    expected="--fail-fast --interval --json --jq --required --template --watch --web"
-    actual=$(gh pr checks --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
-    for flag in $expected; do
-      case "$actual" in
-        *"$flag"*) ;;
-        *) echo "❌ k missing: $flag"; errors=$((errors + 1)) ;;
-      esac
-    done
-    
-    # d: gh pr diff
-    expected="--color --name-only --patch --web"
-    actual=$(gh pr diff --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
-    for flag in $expected; do
-      case "$actual" in
-        *"$flag"*) ;;
-        *) echo "❌ d missing: $flag"; errors=$((errors + 1)) ;;
-      esac
-    done
-    
-    # c: gh pr create (subset)
-    expected="--base --draft --dry-run --label --recover --reviewer --title --web"
-    actual=$(gh pr create --help | grep -E "^\s+-" | sed 's/,//g' | awk '{for(i=1;i<=NF;i++) if($i ~ /^--/) print $i}' | tr '\n' ' ')
-    for flag in $expected; do
-      case "$actual" in
-        *"$flag"*) ;;
-        *) echo "❌ c missing: $flag"; errors=$((errors + 1)) ;;
-      esac
-    done
-    
+
     if [ $errors -eq 0 ]; then
       echo "✅ All documented flags verified"
     else
-      echo ""
-      echo "Found $errors missing flag(s)"
+      echo "❌ Found $errors missing flag(s)"
       exit 1
     fi
     ;;
-  
+
   # show usage for invalid options
   *) echo "Usage: gp {w|t|k|kw|d|s|c|verify} [flags]
   w  - view current PR in web browser
-       flags: --comments, --json, --jq, --template, --web
+       flags: $FLAGS_W_T
   t  - view current PR in terminal
-       flags: --comments, --json, --jq, --template, --web
+       flags: $FLAGS_W_T
   k  - show CI checks for current PR
-       flags: --fail-fast, --interval, --json, --jq, --required, --template, --watch, --web
+       flags: $FLAGS_K
   kw - watch CI checks and run command when done
-       flags: -c/--command (custom command), --fail-fast, --interval
+       flags: -c/--command (custom command), $FLAGS_KW
   d  - view diff of current PR
-       flags: --color, --name-only, --patch, --web
+       flags: $FLAGS_D
   s  - select and checkout a PR using fzf (no flags)
   c  - create a new PR
-       flags: --base, --draft, --dry-run, --label, --recover, --reviewer, --title, --web
+       flags: $FLAGS_C
   verify - verify documented flags match actual gh pr commands
-  
+
   All commands accept PR selectors: [<number> | <url> | <branch>]" >&2; exit 1 ;;
 esac
