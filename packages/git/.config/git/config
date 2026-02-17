@@ -13,10 +13,13 @@
 	ap = add -p
 	co = checkout
 	cob = checkout -b
+	sw = switch
+	swf = !sh -c 'git switch $(git branch | fzf)'
 	fixup = commit -v --fixup
 	amend = commit -v --amend
 
 	b = branch
+	bf = !sh -c 'git branch | fzf'
 	bd = branch -d
 	bD = branch -D
 
@@ -71,6 +74,10 @@
 	defaultBranch = main
 [credential]
 	helper = osxkeychain
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
