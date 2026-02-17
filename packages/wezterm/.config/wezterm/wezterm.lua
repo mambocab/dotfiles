@@ -32,6 +32,12 @@ config.keys = {
     key = "RightArrow",
     action = wezterm.action.SendString '\x1bf',
   },
+  -- Quick select with Alt-Enter.
+  {
+    mods = "ALT",
+    key = "Enter",
+    action = wezterm.action.QuickSelect,
+  },
 }
 
 -- Tab appearance.
