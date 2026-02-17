@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+# Machine-local pre-configuration hook.
+# Source ~/.local/.zshrc.pre.local if it exists. This allows machine-specific customizations
+# to run before any shared dotfiles configuration, without modifying the shared dotfiles themselves.
+[[ -f ~/.local/.zshrc.pre.local ]] && source ~/.local/.zshrc.pre.local
+
 # If profiling shell startup, set ZSHRC_PROFILE.
 # ZSHRC_PROFILE=1
 if [[ -n "$ZSHRC_PROFILE" ]]; then
@@ -309,3 +314,8 @@ if [[ -n "$ZSHRC_PROFILE" ]]; then
 fi
 
 unsetopt BG_NICE
+
+# Machine-local post-configuration hook.
+# Source ~/.local/.zshrc.post.local if it exists. This allows machine-specific customizations
+# to run after all shared dotfiles configuration, without modifying the shared dotfiles themselves.
+[[ -f ~/.local/.zshrc.post.local ]] && source ~/.local/.zshrc.post.local
