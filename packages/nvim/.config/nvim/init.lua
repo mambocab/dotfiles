@@ -201,6 +201,15 @@ vim.lsp.config('pyright', {
 		}
 	},
 })
+vim.lsp.config('ty', {
+	-- settings = {
+	--      ty = {}
+	-- },
+})
+vim.lsp.enable('ty')
+
+-- For debugging pylsp.
+-- cmd = { 'pylsp', '-vvv', '--log-file', '/tmp/pylsp.log' }
 vim.lsp.config('pylsp', {
 	settings = {
 		pylsp = {
