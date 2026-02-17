@@ -6,6 +6,8 @@
 Low-hanging fruit:
 	- Implement `checkout-remote` git alias (see TODO in git config, SO link there).
 	- Add guardrails for gh `co` alias when diffs exceed 100 files (see TODO in gh config).
+	- Remove `eval` calls from `gp`.
+	- Add `fzf`-powered tab-completion to `gp`.
 
 Missing packages:
 	- Add a `claude` package for ~/CLAUDE.md and Claude Code settings.
