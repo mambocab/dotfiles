@@ -30,7 +30,12 @@ eval "$(direnv hook zsh)"
 [ -f $HOME/.localrc ] && source $HOME/.localrc
 
 # Style.
-eval "$(starship init zsh)"
+# Only set starship prompt if starship is installed.
+# Don't set it if TERM_PROGRAM matches values in STARSHIP_SKIP_TERMS (colon-separated list).
+: ${STARSHIP_SKIP_TERMS:=""}
+STARSHIP_SKIP_TERMS="$STARSHIP_SKIP_TERMS:vscode"
+[[ ! ":$STARSHIP_SKIP_TERMS:" =~ ":$TERM_PROGRAM:" ]] && \
+        type starship > /dev/null && eval "$(starship init zsh)"
 
 # zsh interaction configuration.
 # Up and down search for commands starting with the current buffer, if anything's populated in that buffer.
