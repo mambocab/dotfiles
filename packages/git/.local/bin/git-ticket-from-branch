@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+import configparser
+import re
+import string
+import subprocess
+import sys
+from pathlib import Path
+
+
+
+def run(*args: str) -> str:
+    return subprocess.run(args, check=True, stdout=subprocess.PIPE).stdout.decode()
+
+
+def get_base_url() -> str:
+    config_path = Path.home() / ".config" / "git-ticket-from-branch" / "config.ini"
+    if not config_path.exists():
+        print(f"Config not found: {config_path}", file=sys.stderr)
+        print("Create it with:\n  [ticket]\n  base_url = https://your-jira.atlassian.net/browse", file=sys.stderr)
+        sys.exit(1)
+    config = configparser.ConfigParser()
+    config.read(config_path)
+    return config["ticket"]["base_url"]
+
+
+def main():
+    base_url = get_base_url()
+    branch_name = run("git", "rev-parse", "--abbrev-ref", "HEAD")
+    for match in re.finditer(r"[A-Z]{2,4}-\d+", branch_name):
+        # Let's be extra-cautious and double-check that the thing we're about
+        # to format into a URL is what we think it is.
+        group = match.group()
+        project, id_ = match.group().split("-")
+        assert all(c in string.ascii_letters for c in project)
+        assert all(c in string.digits for c in id_)
+        # rstrip: tolerate trailing slash in config
+        run("open", f"{base_url.rstrip('/')}/{group}")
+
+
+if __name__ == "__main__":
+    main()
