@@ -53,47 +53,19 @@ config.font = wezterm.font_with_fallback {
 -- Makes large-width characters, which I use with starship, behave more intuitively, at least to my brain.
 config.allow_square_glyphs_to_overflow_width = "Always"
 
--- Color schemes, including some nice ones I'm not using today. Uncomment to use.
---
--- Dark.
--- config.color_scheme = 'Afterglow'
--- config.color_scheme = "Apathy (base16)"
--- config.color_scheme = 'arcoiris'
--- config.color_scheme = 'Argonaut'
--- config.color_scheme = 'Arthur'
--- config.color_scheme = 'Ashes (dark) (terminal.sexy)'
--- config.color_scheme = 'Atelier Cave (base16)'
--- config.color_scheme = 'Atelier Dune (base16)'
--- config.color_scheme = 'Atelier Sulphurpool (base16)'
--- config.color_scheme = 'Ayu Mirage'
--- config.color_scheme = 'Bamboo Multiplex'
--- config.color_scheme = 'Banana Blueberry'
--- config.color_scheme = 'Black Metal (base16)'
--- config.color_scheme = 'Black Metal (Bathory) (base16)'
--- config.color_scheme = 'Black Metal (Gorgoroth) (base16)'
--- config.color_scheme = 'Black Metal (Khold) (base16)'
--- config.color_scheme = 'BlulocoDark'
--- config.color_scheme = 'Black Metal (Mayhem) (base16)'
--- config.color_scheme = 'Black Metal (Nile) (base16)'
--- config.color_scheme = 'Black Metal (Venom) (base16)'
--- config.color_scheme = 'Azu (Gogh)'
--- config.color_scheme = "terafox"
--- config.color_scheme = 'Brush Trees Dark (base16)'
--- config.color_scheme = 'wilmersdorf'
---
--- Light.
--- config.color_scheme = "Atelier Estuary Light (base16)"
--- config.color_scheme = "Atelierforest (light) (terminal.sexy)"
--- config.color_scheme = "Catppuccin Latte"
--- config.color_scheme = "Sagelight (base16)"
--- config.color_scheme = 'Eighties (light) (terminal.sexy)'
--- config.color_scheme = 'Harmonic16 Light (base16)'
--- config.color_scheme = 'Mostly Bright (terminal.sexy)'
--- config.color_scheme = 'Ocean (light) (terminal.sexy)'
--- config.color_scheme = 'PaperColor Light (base16)'
--- config.color_scheme = 'rose-pine-dawn'
--- config.color_scheme = 'seoulbones_light'
--- config.color_scheme = 'Yousai (terminal.sexy)'
+-- Color scheme: loaded from ~/.config/wezterm/theme.local, falls back to 'hardhacker'.
+-- This file reloads automatically because wezterm watches the config directory.
+-- If that ever breaks, add: wezterm.add_to_config_reload_watch_list(theme_file)
+local default_theme = 'hardhacker'
+local theme_file = wezterm.home_dir .. '/.config/wezterm/theme.local'
+local ok, theme = pcall(function()
+  local f = io.open(theme_file, 'r')
+  if not f then return nil end
+  local name = f:read('*l')
+  f:close()
+  return name
+end)
+config.color_scheme = (ok and theme and theme ~= '') and theme or default_theme
 
 -- This should always be the last line.
 return config
