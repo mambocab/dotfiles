@@ -68,3 +68,4 @@ just uninstall
 | `ripgrep` | `.config/ripgreprc` |
 | `scripts` | `.local/bin/gp`, `git-delete-merged-to`, `npmx` |
 | `fonts` | `.fonts/iosevka/` build config |
+| `dasht` | Brewfile-only; installs dependencies for [dasht](https://github.com/sunaku/dasht) |

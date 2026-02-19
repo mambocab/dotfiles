@@ -260,15 +260,6 @@ function go-objdump() {
 # One-time setup: brew install atuin
 type atuin > /dev/null && eval "$(atuin init zsh)"
 
-# Experimental: dasht, a Dash-inspired docs browser.
-# One-time setup:
-#   mkdir ~/opt
-#   git clone git@github.com:sunaku/dasht.git $DASHT_DIR
-export DASHT_DIR=$HOME/opt/dasht
-path+="$DASHT_DIR/bin"
-fpath+="$DASHT_DIR/etc/zsh/completions"
-export MANPATH="$DASHT_DIR/man:$MANPATH"
-
 # ^t for fzf file-selection.
 # Framework taken from https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 #

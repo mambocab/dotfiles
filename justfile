@@ -1,4 +1,4 @@
-packages := "shell git nvim helix wezterm starship atuin direnv gh pip ripgrep scripts fonts"
+packages := "shell git nvim helix wezterm starship atuin direnv gh pip ripgrep scripts fonts dasht"
 
 _stow mode +pkgs:
     #!/usr/bin/env bash

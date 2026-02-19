@@ -37,3 +37,4 @@ Packages with a `packages/<name>.Brewfile` get `brew bundle` run first. Packages
 
 - [house-style.md](house-style.md) — Code, documentation, and git conventions
 - [stow.md](stow.md) — GNU Stow reference (terminology, options, tree folding, ignore lists, conflicts)
+- [dasht.md](dasht.md) — dasht offline API docs browser (commands, config, docset storage)
