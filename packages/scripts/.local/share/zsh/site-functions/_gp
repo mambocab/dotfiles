@@ -1,0 +1,96 @@
+#compdef gp
+# Completion for gp — a GitHub PR helper script
+
+_gp() {
+  local -a subcmds=(
+    'w:view current PR in web browser'
+    't:view current PR in terminal'
+    'k:show CI checks for current PR'
+    'kw:watch CI checks and run command when done'
+    'd:view diff of current PR'
+    's:select and checkout a PR using fzf'
+    'c:create a new PR'
+    'verify:verify documented flags match actual gh pr commands'
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe 'subcommand' subcmds
+    return
+  fi
+
+  local subcmd=$words[2]
+
+  # Shift past "gp <subcmd>" so completions see only the subcommand's args
+  (( CURRENT-- ))
+  shift words
+
+  local -a flags
+  local has_selector=true
+
+  case $subcmd in
+    w|t)
+      flags=(
+        '--comments:show comments'
+        '--json:output JSON with specified fields'
+        '--jq:filter JSON output with a jq expression'
+        '--template:format JSON output with a Go template'
+        '--web:open in web browser'
+      )
+      ;;
+    k)
+      flags=(
+        '--fail-fast:exit watch on first failure'
+        '--interval:refresh interval in seconds'
+        '--json:output JSON with specified fields'
+        '--jq:filter JSON output with a jq expression'
+        '--required:only show required checks'
+        '--template:format JSON output with a Go template'
+        '--watch:watch checks until they finish'
+        '--web:open in web browser'
+      )
+      ;;
+    kw)
+      flags=(
+        '-c:command to run when checks finish'
+        '--command:command to run when checks finish'
+        '--fail-fast:exit watch on first failure'
+        '--interval:refresh interval in seconds'
+      )
+      ;;
+    d)
+      flags=(
+        '--color:color output'
+        '--name-only:show only file names'
+        '--patch:display diff in patch format'
+        '--web:open in web browser'
+      )
+      ;;
+    c)
+      flags=(
+        '--base:base branch for the PR'
+        '--draft:create as draft PR'
+        '--dry-run:print details without creating PR'
+        '--label:add labels to the PR'
+        '--recover:recover input from a failed create'
+        '--reviewer:request reviewer for the PR'
+        '--title:title for the PR'
+        '--web:open in web browser after creating'
+      )
+      has_selector=false
+      ;;
+    s|verify)
+      return
+      ;;
+  esac
+
+  _describe 'flag' flags
+  $has_selector && _gp_pr_selector
+}
+
+_gp_pr_selector() {
+  local -a branches
+  branches=(${(f)"$(git branch --format='%(refname:short)' 2>/dev/null)"})
+  (( $#branches )) && _describe 'branch' branches
+}
+
+_gp "$@"

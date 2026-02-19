@@ -67,6 +67,7 @@ alias e=$EDITOR
 # One-time setup: git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
 . "$HOME/.asdf/asdf.sh"
 # Add completions to path. Has to happen before compinit.
+[[ -d $HOME/.local/share/zsh/site-functions ]] && fpath=($HOME/.local/share/zsh/site-functions $fpath)
 fpath=(${ASDF_DIR}/completions $fpath)
 # One-time setup for the asdf-direnv plugin, per https://github.com/asdf-community/asdf-direnv:
 #   asdf plugin-add direnv
