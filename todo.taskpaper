@@ -14,6 +14,7 @@ Missing packages:
 	- Add an `fzf` package — .zshrc references it but there's no stowed config.
 	- Add an `ssh` package.
 	- Look for other binaries and stuff used in .zshrc and similar.
+	- Add `dasht` to managed stuff.
 
 Repo improvements:
 	- Add per-package Brewfiles so `just install <pkg>` is self-contained (atuin, starship, fzf, fd, ripgrep, git-delta, helix, etc.).
