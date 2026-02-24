@@ -9,12 +9,15 @@ _stow mode +pkgs:
     esac
     for pkg in {{pkgs}}; do
         if [ -f "packages/$pkg.Brewfile" ]; then
-            brew bundle --no-lock --file="packages/$pkg.Brewfile"
+            brew bundle --file="packages/$pkg.Brewfile"
         fi
         if [ -d "packages/$pkg" ]; then
             stow $stow_args -d packages -t ~ "$pkg"
         fi
     done
+
+macos-defaults:
+    ./macos-defaults.sh
 
 install *pkgs:
     just _stow install {{ if pkgs == "" { packages } else { pkgs } }}
