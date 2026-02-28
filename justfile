@@ -20,8 +20,10 @@ _stow mode +pkgs:
     done
 
 # macOS fontd (14+) doesn't follow symlinks, so fonts are copied rather than stowed.
+# Opening the files registers them with Font Book without requiring a logout.
 _sync_fonts:
     rsync -a packages/fonts/Library/Fonts/ ~/Library/Fonts/
+    open ~/Library/Fonts/IosevkaMambocab/*.ttf
 
 macos-defaults:
     ./macos-defaults.sh
