@@ -1,4 +1,7 @@
-packages := "shell git nvim helix wezterm starship atuin direnv gh pip ripgrep scripts fonts dasht"
+packages := "shell git nvim helix wezterm starship atuin direnv gh pip ripgrep scripts dasht"
+
+# Packages managed by `just sync` rather than stow (e.g. when symlinks aren't enough).
+sync_packages := "fonts"
 
 _stow mode +pkgs:
     #!/usr/bin/env bash
@@ -16,6 +19,10 @@ _stow mode +pkgs:
         fi
     done
 
+# macOS fontd (14+) doesn't follow symlinks, so fonts are copied rather than stowed.
+_sync_fonts:
+    rsync -a packages/fonts/Library/Fonts/ ~/Library/Fonts/
+
 macos-defaults:
     ./macos-defaults.sh
 
@@ -27,3 +34,9 @@ simulate *pkgs:
 
 uninstall *pkgs:
     just _stow uninstall {{ if pkgs == "" { packages } else { pkgs } }}
+
+sync *pkgs:
+    #!/usr/bin/env bash
+    for pkg in {{ if pkgs == "" { sync_packages } else { pkgs } }}; do
+        just _sync_$pkg
+    done
