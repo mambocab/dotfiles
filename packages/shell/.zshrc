@@ -5,6 +5,10 @@
 # to run before any shared dotfiles configuration, without modifying the shared dotfiles themselves.
 [[ -f ~/.local/.zshrc.pre.local ]] && source ~/.local/.zshrc.pre.local
 
+# Lazy-load plugin: sourced early so it's available throughout .zshrc.
+# Installed by `just fetch-plugins`; see packages/shell/.local/bin/fetch-zsh-plugins.
+[[ -f ~/.local/share/zsh/plugins/lazy-load.plugin.zsh ]] && source ~/.local/share/zsh/plugins/lazy-load.plugin.zsh
+
 # If profiling shell startup, set ZSHRC_PROFILE.
 # ZSHRC_PROFILE=1
 if [[ -n "$ZSHRC_PROFILE" ]]; then

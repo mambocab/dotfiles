@@ -28,8 +28,12 @@ _sync_fonts:
 macos-defaults:
     ./macos-defaults.sh
 
+fetch-plugins:
+    bash packages/shell/.local/bin/fetch-zsh-plugins
+
 install *pkgs:
     just _stow install {{ if pkgs == "" { packages } else { pkgs } }}
+    just fetch-plugins
 
 simulate *pkgs:
     just _stow simulate {{ if pkgs == "" { packages } else { pkgs } }}

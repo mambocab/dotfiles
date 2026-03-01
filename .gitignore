@@ -1,0 +1,5 @@
+# Ignore .local directories everywhere — these are runtime/local-only by convention.
+# Package directories that intentionally vendor .local/ content for stow override this below.
+.local
+!packages/*/.local
+!packages/*/.local/**

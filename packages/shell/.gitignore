@@ -1,0 +1,2 @@
+# The repo-level .gitignore ignores .local everywhere but excepts packages/*/.local.
+# This package intentionally vendors files into .local/ to be stowed.

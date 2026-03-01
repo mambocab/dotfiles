@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Fetches and verifies zsh plugins from known sources.
+# Run via `just fetch-plugins` or directly after stowing.
+#
+# KNOWN_HASH is the SHA-256 of the upstream file as reviewed and approved.
+# To upgrade: update KNOWN_HASH to the new hash after reviewing the diff at
+#   https://github.com/goarano/zsh-lazy-load/blob/main/lazy-load.plugin.zsh
+
+set -euo pipefail
+
+KNOWN_HASH="9e6954f31e600f0760ccb7a5655e3c7e5fbf7c0dabd78b1ac7043f4713cf5e23"
+PLUGIN_URL="https://raw.githubusercontent.com/goarano/zsh-lazy-load/main/lazy-load.plugin.zsh"
+DEST="$HOME/.local/share/zsh/plugins/lazy-load.plugin.zsh"
+
+mkdir -p "$(dirname "$DEST")"
+
+tmpfile=$(mktemp)
+trap 'rm -f "$tmpfile"' EXIT
+
+if ! curl -fsSL "$PLUGIN_URL" -o "$tmpfile"; then
+    echo "fetch-zsh-plugins: failed to download $PLUGIN_URL — skipping" >&2
+    exit 0
+fi
+
+actual_hash=$(shasum -a 256 "$tmpfile" | awk '{print $1}')
+
+if [[ "$actual_hash" != "$KNOWN_HASH" ]]; then
+    echo "WARNING: lazy-load.plugin.zsh has changed on main." >&2
+    echo "  Expected: $KNOWN_HASH" >&2
+    echo "  Got:      $actual_hash" >&2
+    echo "  Review the diff at: https://github.com/goarano/zsh-lazy-load/blob/main/lazy-load.plugin.zsh" >&2
+    echo "  If the new version looks good, update KNOWN_HASH in packages/shell/.local/bin/fetch-zsh-plugins." >&2
+    exit 1
+fi
+
+cp "$tmpfile" "$DEST"
+echo "fetch-zsh-plugins: installed lazy-load.plugin.zsh to $DEST"
