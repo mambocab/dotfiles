@@ -9,6 +9,7 @@ _gp() {
     'kw:watch CI checks and run command when done'
     'd:view diff of current PR'
     's:select and checkout a PR using fzf'
+    'fd:fuzzy-find PRs across all repos'
     'c:create a new PR'
     'verify:verify documented flags match actual gh pr commands'
   )
@@ -37,7 +38,7 @@ _gp() {
         '--web:open in web browser'
       )
       ;;
-    k)
+    k|kw)
       flags=(
         '--fail-fast:exit watch on first failure'
         '--interval:refresh interval in seconds'
@@ -49,14 +50,6 @@ _gp() {
         '--web:open in web browser'
       )
       ;;
-    kw)
-      flags=(
-        '-c:command to run when checks finish'
-        '--command:command to run when checks finish'
-        '--fail-fast:exit watch on first failure'
-        '--interval:refresh interval in seconds'
-      )
-      ;;
     d)
       flags=(
         '--color:color output'
@@ -64,6 +57,14 @@ _gp() {
         '--patch:display diff in patch format'
         '--web:open in web browser'
       )
+      ;;
+    fd)
+      flags=(
+        '--owner:filter by organization owner'
+        '-R:specify repository'
+        '--repo:specify repository'
+      )
+      has_selector=false
       ;;
     c)
       flags=(
