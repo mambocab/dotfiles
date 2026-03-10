@@ -85,6 +85,74 @@ case "$1" in
   # c: create a new PR
   c) shift; gh pr create "$@" ;;
 
+  # q: show merge queue status
+  q) shift; 
+     owner=$(gh repo view --json owner -q .owner.login)
+     repo=$(gh repo view --json name -q .name)
+     gh api graphql -f query='query($owner: String!, $repo: String!) {
+       repository(owner: $owner, name: $repo) {
+         mergeQueue {
+           entries(first: 50) {
+             nodes {
+               pullRequest { number title }
+               state
+               position
+               estimatedTimeToMerge
+               enqueuedAt
+             }
+           }
+         }
+       }
+     }' -f owner="$owner" -f repo="$repo" --jq '.data.repository.mergeQueue.entries.nodes[]? | "#\(.pullRequest.number) [\(.state)] pos:\(.position) eta:\(.estimatedTimeToMerge // "unknown") - \(.pullRequest.title)"' ;;
+
+  # qw: wait for PR to merge from queue
+  qw) shift;
+      pr="${1:-$(gh pr view --json number -q .number 2>/dev/null)}"
+      [ -z "$pr" ] && echo "Error: No PR found. Provide a PR number, URL, or switch to a PR branch." >&2 && exit 1
+      # Extract PR number from URL if needed
+      case "$pr" in
+        http*) pr=$(echo "$pr" | grep -oE '[0-9]+$') ;;
+      esac
+      owner=$(gh repo view --json owner -q .owner.login)
+      repo=$(gh repo view --json name -q .name)
+      while true; do
+        data=$(gh api graphql -f query='query($owner: String!, $repo: String!, $pr: Int!) {
+          repository(owner: $owner, name: $repo) {
+            pullRequest(number: $pr) {
+              state
+              merged
+              title
+            }
+            mergeQueue {
+              entries(first: 50) {
+                nodes {
+                  pullRequest { number }
+                  state
+                  position
+                  estimatedTimeToMerge
+                }
+              }
+            }
+          }
+        }' -f owner="$owner" -f repo="$repo" -F pr="$pr" --jq '.data.repository')
+        state=$(echo "$data" | jq -r '.pullRequest | "\(.state)|\(.merged)"')
+        case "$state" in
+          MERGED\|true) printf "\r\033[K✓ PR #$pr merged\n"; exit 0 ;;
+          CLOSED\|false) printf "\r\033[K✗ PR #$pr closed without merging\n"; exit 1 ;;
+        esac
+        title=$(echo "$data" | jq -r '.pullRequest.title')
+        queue_entry=$(echo "$data" | jq -r --arg pr "$pr" '.mergeQueue.entries.nodes[] | select(.pullRequest.number == ($pr | tonumber))')
+        if [ -n "$queue_entry" ]; then
+          position=$(echo "$queue_entry" | jq -r '.position')
+          eta=$(echo "$queue_entry" | jq -r '.estimatedTimeToMerge // "unknown"')
+          qstate=$(echo "$queue_entry" | jq -r '.state')
+          printf "\r\033[KPR #$pr: $title\nQueue position: $position | State: $qstate | ETA: $eta"
+        else
+          printf "\r\033[KPR #$pr: $title\nNot in merge queue yet..."
+        fi
+        sleep 10
+      done ;;
+
   # verify: check that documented flags match actual gh pr commands
   verify)
     # ANSI color codes
@@ -187,7 +255,7 @@ c|gh pr create|FLAGS_C||yes" | while IFS='|' read -r name gh_cmd flags_var note 
     ;;
 
   # show usage for invalid options
-  *) echo "Usage: gp {w|t|k|kw|d|s|fd|c|verify} [flags]
+  *) echo "Usage: gp {w|t|k|kw|d|s|fd|c|q|qw|verify} [flags]
   w  - view current PR in web browser
        flags: $FLAGS_W_T
   t  - view current PR in terminal
@@ -203,6 +271,8 @@ c|gh pr create|FLAGS_C||yes" | while IFS='|' read -r name gh_cmd flags_var note 
        flags: --owner, -R/--repo
   c  - create a new PR
        flags: $FLAGS_C
+  q  - show merge queue status (no flags)
+  qw - wait for PR to merge from queue [<number> | <url> | <branch>]
   verify - verify documented flags match actual gh pr commands
 
   Most commands accept PR selectors: [<number> | <url> | <branch>]
