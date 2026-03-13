@@ -1,4 +1,4 @@
-packages := "shell git nvim helix wezterm starship atuin direnv gh pip ripgrep scripts dasht"
+packages := "shell git nvim helix wezterm starship atuin direnv gh pip ripgrep scripts dasht rectangle"
 
 # Packages managed by `just sync` rather than stow (e.g. when symlinks aren't enough).
 sync_packages := "fonts"
