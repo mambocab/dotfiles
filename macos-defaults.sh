@@ -16,6 +16,10 @@ defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add \
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add \
     39 '<dict><key>enabled</key><true/><key>value</key><dict><key>parameters</key><array><integer>16</integer><integer>16</integer><integer>0</integer></array><key>type</key><string>button</string></dict></dict>'
 
+# Disable desktop icons and restart Finder to apply
+defaults write com.apple.finder CreateDesktop -bool FALSE
+killall Finder
+
 # Auto-hide the Dock and restart it to apply
 defaults write com.apple.dock autohide -bool true
 killall Dock
